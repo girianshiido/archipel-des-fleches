@@ -790,6 +790,11 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .feedback.is-success { color: var(--foreground); }
     #archipel-categories .feedback.is-error { color: var(--destructive); }
     #archipel-categories .action-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    #archipel-categories .reset-panel { display: grid; gap: 14px; }
+    #archipel-categories .reset-panel[hidden] { display: none; }
+    #archipel-categories .reset-copy { display: grid; gap: 5px; }
+    #archipel-categories .reset-details { display: grid; gap: 5px; margin: 0; padding-inline-start: 20px; }
+    #archipel-categories .reset-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     #archipel-categories .notebook { display: grid; gap: 10px; }
     #archipel-categories .discoveries { display: flex; flex-wrap: wrap; gap: 8px; }
     #archipel-categories .ending { display: grid; gap: 18px; text-align: center; justify-items: center; padding-block: 14px; }
@@ -817,8 +822,24 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;span class=&quot;text-small text-muted&quot;&gt;Une expédition dans le monde des catégories&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset&quot;&gt;Recommencer&lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset&quot; aria-controls=&quot;cat-reset-panel&quot; aria-expanded=&quot;false&quot;&gt;Recommencer…&lt;/button&gt;
     &lt;/div&gt;
+
+    &lt;section class=&quot;card reset-panel&quot; id=&quot;cat-reset-panel&quot; role=&quot;dialog&quot; aria-labelledby=&quot;cat-reset-title&quot; hidden&gt;
+      &lt;div class=&quot;reset-copy&quot;&gt;
+        &lt;strong id=&quot;cat-reset-title&quot;&gt;Où veux-tu recommencer ?&lt;/strong&gt;
+        &lt;span&gt;Choisis l’étendue de la remise à zéro. La progression effacée ne pourra pas être récupérée.&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;ul class=&quot;reset-details&quot;&gt;
+        &lt;li id=&quot;cat-reset-island-detail&quot;&gt;Île actuelle : efface ses réponses et reprend à sa première mission.&lt;/li&gt;
+        &lt;li&gt;Tout le jeu : efface les îles, les éclats de savoir et le carnet de bord.&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;div class=&quot;reset-actions&quot;&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-reset-island&quot;&gt;Recommencer cette île&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;cat-reset-game&quot;&gt;Recommencer tout le jeu&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset-cancel&quot;&gt;Annuler&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
 
     &lt;div class=&quot;viz-grid stats&quot; aria-label=&quot;Progression&quot;&gt;
       &lt;div class=&quot;card viz-stat&quot;&gt;
@@ -1142,14 +1163,60 @@ html&gt;body{padding:0}&lt;/style&gt;
           : &#x27;&lt;span class=&quot;text-muted&quot;&gt;Ton premier concept apparaîtra ici dès que tu accosteras.&lt;/span&gt;&#x27;;
       }
 
-      root.querySelector(&#x27;#cat-reset&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
-        if (window.confirm(&#x27;Effacer toute la progression sauvegardée et recommencer ?&#x27;)) {
-          state = freshState();
-          answered = false;
-          try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
-          try { window.name = &#x27;&#x27;; } catch (_) {}
-          renderAll();
-        }
+      const resetButton = root.querySelector(&#x27;#cat-reset&#x27;);
+      const resetPanel = root.querySelector(&#x27;#cat-reset-panel&#x27;);
+
+      function closeResetPanel(returnFocus = false) {
+        resetPanel.hidden = true;
+        resetButton.setAttribute(&#x27;aria-expanded&#x27;, &#x27;false&#x27;);
+        if (returnFocus) resetButton.focus();
+      }
+
+      function openResetPanel() {
+        const levelIndex = Math.min(state.currentLevel, levels.length - 1);
+        root.querySelector(&#x27;#cat-reset-island-detail&#x27;).textContent = `Île actuelle (${levels[levelIndex].name}) : efface ses réponses et reprend à sa première mission.`;
+        resetPanel.hidden = false;
+        resetButton.setAttribute(&#x27;aria-expanded&#x27;, &#x27;true&#x27;);
+        root.querySelector(&#x27;#cat-reset-island&#x27;).focus();
+      }
+
+      function restartCurrentIsland() {
+        const levelIndex = Math.min(state.currentLevel, levels.length - 1);
+        levels[levelIndex].questions.forEach((_, questionIndex) =&gt; {
+          const key = keyFor(levelIndex, questionIndex);
+          delete state.correct[key];
+          delete state.attempts[key];
+        });
+        state.completed = state.completed.filter(index =&gt; index !== levelIndex);
+        state.currentLevel = levelIndex;
+        state.currentQuestion = 0;
+        answered = false;
+        markSeen(levelIndex);
+        closeResetPanel();
+        saveState();
+        renderAll();
+        root.querySelector(&#x27;#cat-live&#x27;).textContent = `${levels[levelIndex].name} recommencée depuis la première mission.`;
+      }
+
+      function restartEntireGame() {
+        state = freshState();
+        answered = false;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+        try { window.name = &#x27;&#x27;; } catch (_) {}
+        closeResetPanel();
+        renderAll();
+        root.querySelector(&#x27;#cat-live&#x27;).textContent = &#x27;Toute la progression a été effacée. Retour à la première île.&#x27;;
+      }
+
+      resetButton.addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (resetPanel.hidden) openResetPanel();
+        else closeResetPanel(true);
+      });
+      root.querySelector(&#x27;#cat-reset-island&#x27;).addEventListener(&#x27;click&#x27;, restartCurrentIsland);
+      root.querySelector(&#x27;#cat-reset-game&#x27;).addEventListener(&#x27;click&#x27;, restartEntireGame);
+      root.querySelector(&#x27;#cat-reset-cancel&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; closeResetPanel(true));
+      root.addEventListener(&#x27;keydown&#x27;, event =&gt; {
+        if (event.key === &#x27;Escape&#x27; &amp;&amp; !resetPanel.hidden) closeResetPanel(true);
       });
 
       renderAll();
