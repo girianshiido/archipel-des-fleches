@@ -751,6 +751,19 @@ html&gt;body{padding:0}&lt;/style&gt;
 &lt;div id=&quot;archipel-categories&quot;&gt;
   &lt;style&gt;
     #archipel-categories { color: var(--foreground); }
+    #archipel-categories [hidden] { display: none !important; }
+    #archipel-categories .menu-screen { display: grid; gap: 18px; }
+    #archipel-categories .menu-hero { display: grid; gap: 14px; justify-items: start; padding-block: 16px; }
+    #archipel-categories .menu-mark { font-size: 52px; }
+    #archipel-categories .menu-copy { display: grid; gap: 6px; max-width: 600px; }
+    #archipel-categories .menu-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    #archipel-categories .slot-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+    #archipel-categories .slot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    #archipel-categories .slot-row { display: flex; gap: 8px; align-items: stretch; min-width: 0; }
+    #archipel-categories .slot-btn { flex: 1; min-width: 0; white-space: normal; justify-content: flex-start; text-align: left; }
+    #archipel-categories .slot-copy { display: grid; gap: 2px; width: 100%; }
+    #archipel-categories .slot-warning { display: grid; gap: 12px; }
+    #archipel-categories .game-header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     #archipel-categories .game-shell { display: grid; gap: 18px; }
     #archipel-categories .game-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     #archipel-categories .brand { display: flex; align-items: center; gap: 10px; }
@@ -802,6 +815,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .ending-copy { max-width: 560px; }
     #archipel-categories .sr-message { min-height: 1px; }
     @media (max-width: 720px) {
+      #archipel-categories .slot-grid { grid-template-columns: 1fr; }
       #archipel-categories .roadmap { grid-template-columns: repeat(4, minmax(64px, 1fr)); }
       #archipel-categories .answers { grid-template-columns: 1fr; }
     }
@@ -813,7 +827,9 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
   &lt;/style&gt;
 
-  &lt;div class=&quot;game-shell&quot;&gt;
+  &lt;section class=&quot;menu-screen&quot; id=&quot;cat-menu-screen&quot; aria-live=&quot;polite&quot;&gt;&lt;/section&gt;
+
+  &lt;div class=&quot;game-shell&quot; id=&quot;cat-game-screen&quot; hidden&gt;
     &lt;div class=&quot;game-header&quot;&gt;
       &lt;div class=&quot;brand&quot;&gt;
         &lt;span class=&quot;brand-mark&quot; aria-hidden=&quot;true&quot;&gt;🏝️&lt;/span&gt;
@@ -822,7 +838,11 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;span class=&quot;text-small text-muted&quot;&gt;Une expédition dans le monde des catégories&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
-      &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset&quot; aria-controls=&quot;cat-reset-panel&quot; aria-expanded=&quot;false&quot;&gt;Recommencer…&lt;/button&gt;
+      &lt;div class=&quot;game-header-actions&quot;&gt;
+        &lt;span class=&quot;viz-badge&quot; id=&quot;cat-active-slot&quot;&gt;Sauvegarde 1&lt;/span&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-back-menu&quot;&gt;Menu&lt;/button&gt;
+        &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset&quot; aria-controls=&quot;cat-reset-panel&quot; aria-expanded=&quot;false&quot;&gt;Recommencer…&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
 
     &lt;section class=&quot;card reset-panel&quot; id=&quot;cat-reset-panel&quot; role=&quot;dialog&quot; aria-labelledby=&quot;cat-reset-title&quot; hidden&gt;
@@ -873,7 +893,9 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;script&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;archipel-categories&#x27;);
-      const STORAGE_KEY = &#x27;archipel-categories-v1&#x27;;
+      const LEGACY_STORAGE_KEY = &#x27;archipel-categories-v1&#x27;;
+      const SAVES_KEY = &#x27;archipel-categories-saves-v2&#x27;;
+      const SLOT_COUNT = 10;
       const arrow = &#x27;&lt;marker id=&quot;arrow&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
       const arrowSoft = &#x27;&lt;marker id=&quot;arrow-soft&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
 
@@ -964,45 +986,236 @@ html&gt;body{padding:0}&lt;/style&gt;
       ];
 
       const freshState = () =&gt; ({ currentLevel: 0, currentQuestion: 0, unlocked: 1, completed: [], correct: {}, attempts: {}, seen: [] });
-      let state = loadState();
-      let answered = false;
+      const freshSaveBank = () =&gt; ({ version: 2, slots: Array(SLOT_COUNT).fill(null) });
 
-      function loadState() {
+      function normalizeState(saved) {
+        if (!saved || typeof saved !== &#x27;object&#x27;) return freshState();
+        return Object.assign(freshState(), saved, {
+          completed: Array.isArray(saved.completed) ? saved.completed : [],
+          seen: Array.isArray(saved.seen) ? saved.seen : [],
+          correct: saved.correct &amp;&amp; typeof saved.correct === &#x27;object&#x27; ? saved.correct : {},
+          attempts: saved.attempts &amp;&amp; typeof saved.attempts === &#x27;object&#x27; ? saved.attempts : {}
+        });
+      }
+
+      function readPersisted(key) {
+        let raw = null;
+        try { raw = localStorage.getItem(key); } catch (_) {}
+        if (!raw &amp;&amp; window.name.startsWith(`${key}:`)) raw = window.name.slice(key.length + 1);
+        return raw;
+      }
+
+      function loadSaveBank() {
         try {
-          let raw = null;
-          try { raw = localStorage.getItem(STORAGE_KEY); } catch (_) {}
-          if (!raw &amp;&amp; window.name.startsWith(`${STORAGE_KEY}:`)) raw = window.name.slice(STORAGE_KEY.length + 1);
-          const saved = JSON.parse(raw);
-          if (!saved || typeof saved !== &#x27;object&#x27;) return freshState();
-          return Object.assign(freshState(), saved, {
-            completed: Array.isArray(saved.completed) ? saved.completed : [],
-            seen: Array.isArray(saved.seen) ? saved.seen : [],
-            correct: saved.correct || {},
-            attempts: saved.attempts || {}
-          });
-        } catch (_) { return freshState(); }
+          const savedBank = JSON.parse(readPersisted(SAVES_KEY));
+          if (savedBank &amp;&amp; Array.isArray(savedBank.slots)) {
+            const bank = freshSaveBank();
+            bank.slots = bank.slots.map((_, index) =&gt; {
+              const slot = savedBank.slots[index];
+              if (!slot || !slot.state) return null;
+              return { state: normalizeState(slot.state), updatedAt: slot.updatedAt || new Date().toISOString() };
+            });
+            return bank;
+          }
+        } catch (_) {}
+
+        const bank = freshSaveBank();
+        try {
+          const legacyState = JSON.parse(readPersisted(LEGACY_STORAGE_KEY));
+          if (legacyState &amp;&amp; typeof legacyState === &#x27;object&#x27;) {
+            bank.slots[0] = { state: normalizeState(legacyState), updatedAt: new Date().toISOString() };
+          }
+        } catch (_) {}
+        return bank;
+      }
+
+      let saveBank = loadSaveBank();
+      let state = freshState();
+      let activeSlot = null;
+      let answered = false;
+      let menuMode = &#x27;home&#x27;;
+      let pendingSlotAction = null;
+
+      function persistSaveBank() {
+        const serialized = JSON.stringify(saveBank);
+        try { localStorage.setItem(SAVES_KEY, serialized); } catch (_) {}
+        try { window.name = `${SAVES_KEY}:${serialized}`; } catch (_) {}
       }
 
       function saveState() {
-        const serialized = JSON.stringify(state);
-        try { localStorage.setItem(STORAGE_KEY, serialized); } catch (_) {}
-        try { window.name = `${STORAGE_KEY}:${serialized}`; } catch (_) {}
+        if (activeSlot === null) return;
+        saveBank.slots[activeSlot] = { state: normalizeState(state), updatedAt: new Date().toISOString() };
+        persistSaveBank();
+      }
+
+      function scoreFor(candidate) {
+        return Object.values(candidate.correct || {}).filter(Boolean).length;
       }
 
       function score() {
-        return Object.values(state.correct).filter(Boolean).length;
+        return scoreFor(state);
       }
 
-      function rank() {
-        const n = score();
-        if (state.completed.length === levels.length) return &#x27;Cartographe&#x27;;
+      function rankFor(candidate) {
+        const n = scoreFor(candidate);
+        if ((candidate.completed || []).length === levels.length) return &#x27;Cartographe&#x27;;
         if (n &gt;= 18) return &#x27;Naturaliste&#x27;;
         if (n &gt;= 12) return &#x27;Fonctoriste&#x27;;
         if (n &gt;= 6) return &#x27;Navigateur&#x27;;
         return &#x27;Novice&#x27;;
       }
 
+      function rank() {
+        return rankFor(state);
+      }
+
       function keyFor(levelIndex, questionIndex) { return `${levelIndex}-${questionIndex}`; }
+
+      function formatUpdated(value) {
+        try {
+          return new Date(value).toLocaleString(&#x27;fr-FR&#x27;, { dateStyle: &#x27;short&#x27;, timeStyle: &#x27;short&#x27; });
+        } catch (_) { return &#x27;date inconnue&#x27;; }
+      }
+
+      function slotDescription(slot) {
+        if (!slot) return &#x27;Emplacement libre&#x27;;
+        const savedState = normalizeState(slot.state);
+        const shards = scoreFor(savedState);
+        return `${savedState.completed.length}/${levels.length} îles · ${shards} éclat${shards &gt; 1 ? &#x27;s&#x27; : &#x27;&#x27;} · ${rankFor(savedState)} · ${formatUpdated(slot.updatedAt)}`;
+      }
+
+      function renderMenu() {
+        const screen = root.querySelector(&#x27;#cat-menu-screen&#x27;);
+        const gameScreen = root.querySelector(&#x27;#cat-game-screen&#x27;);
+        gameScreen.hidden = true;
+        screen.hidden = false;
+        const occupiedCount = saveBank.slots.filter(Boolean).length;
+
+        if (menuMode === &#x27;home&#x27;) {
+          screen.innerHTML = `&lt;div class=&quot;menu-hero&quot;&gt;
+            &lt;div class=&quot;menu-mark&quot; aria-hidden=&quot;true&quot;&gt;🧭&lt;/div&gt;
+            &lt;div class=&quot;menu-copy&quot;&gt;
+              &lt;h2&gt;L’Archipel des Flèches&lt;/h2&gt;
+              &lt;span&gt;Explore huit îles pour découvrir la théorie des catégories, des premiers objets jusqu’aux adjonctions.&lt;/span&gt;
+              &lt;span class=&quot;text-small text-muted&quot;&gt;Chaque partie est autosauvegardée dans l’un des 10 emplacements disponibles.&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;menu-actions&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-menu-new&quot;&gt;Démarrer une nouvelle partie&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;cat-menu-continue&quot; ${occupiedCount ? &#x27;&#x27; : &#x27;disabled&#x27;}&gt;Continuer une sauvegarde&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;span class=&quot;text-small text-muted&quot;&gt;${occupiedCount} sauvegarde${occupiedCount === 1 ? &#x27;&#x27; : &#x27;s&#x27;} sur ${SLOT_COUNT}&lt;/span&gt;
+          &lt;/div&gt;`;
+          screen.querySelector(&#x27;#cat-menu-new&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { menuMode = &#x27;new&#x27;; pendingSlotAction = null; renderMenu(); });
+          screen.querySelector(&#x27;#cat-menu-continue&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { menuMode = &#x27;continue&#x27;; pendingSlotAction = null; renderMenu(); });
+          return;
+        }
+
+        const isNewGame = menuMode === &#x27;new&#x27;;
+        const slotsMarkup = saveBank.slots.map((slot, index) =&gt; {
+          const slotNumber = index + 1;
+          const disabled = !isNewGame &amp;&amp; !slot;
+          return `&lt;div class=&quot;slot-row&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-block slot-btn&quot; data-slot-choice=&quot;${index}&quot; ${disabled ? &#x27;disabled&#x27; : &#x27;&#x27;} aria-label=&quot;${isNewGame ? &#x27;Nouvelle partie dans&#x27; : &#x27;Continuer&#x27;} la sauvegarde ${slotNumber}, ${slotDescription(slot)}&quot;&gt;
+              &lt;span class=&quot;slot-copy&quot;&gt;&lt;strong&gt;Sauvegarde ${slotNumber}&lt;/strong&gt;&lt;span class=&quot;text-small&quot;&gt;${slotDescription(slot)}&lt;/span&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            ${slot ? `&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; data-slot-delete=&quot;${index}&quot; aria-label=&quot;Effacer la sauvegarde ${slotNumber}&quot;&gt;Effacer&lt;/button&gt;` : &#x27;&#x27;}
+          &lt;/div&gt;`;
+        }).join(&#x27;&#x27;);
+
+        let warningMarkup = &#x27;&#x27;;
+        if (pendingSlotAction) {
+          const slotNumber = pendingSlotAction.index + 1;
+          const overwrite = pendingSlotAction.type === &#x27;overwrite&#x27;;
+          warningMarkup = `&lt;section class=&quot;card slot-warning&quot; role=&quot;dialog&quot; aria-labelledby=&quot;cat-slot-warning-title&quot;&gt;
+            &lt;strong id=&quot;cat-slot-warning-title&quot;&gt;${overwrite ? `Écraser la sauvegarde ${slotNumber} ?` : `Effacer la sauvegarde ${slotNumber} ?`}&lt;/strong&gt;
+            &lt;span class=&quot;text-destructive&quot;&gt;${overwrite ? &#x27;La progression de cet emplacement sera remplacée par une nouvelle partie.&#x27; : &#x27;Toute la progression de cet emplacement sera définitivement supprimée.&#x27;}&lt;/span&gt;
+            &lt;div class=&quot;menu-actions&quot;&gt;
+              &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-slot-confirm&quot;&gt;${overwrite ? &#x27;Écraser et démarrer&#x27; : &#x27;Effacer définitivement&#x27;}&lt;/button&gt;
+              &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-slot-cancel&quot;&gt;Annuler&lt;/button&gt;
+            &lt;/div&gt;
+          &lt;/section&gt;`;
+        }
+
+        screen.innerHTML = `&lt;div class=&quot;slot-head&quot;&gt;
+          &lt;div class=&quot;menu-copy&quot;&gt;
+            &lt;h2&gt;${isNewGame ? &#x27;Nouvelle partie&#x27; : &#x27;Continuer une partie&#x27;}&lt;/h2&gt;
+            &lt;span&gt;${isNewGame ? &#x27;Choisis un emplacement. Un emplacement occupé demandera confirmation avant d’être écrasé.&#x27; : &#x27;Choisis une sauvegarde existante. Les emplacements libres ne peuvent pas être chargés.&#x27;}&lt;/span&gt;
+          &lt;/div&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-menu-home&quot;&gt;← Menu principal&lt;/button&gt;
+        &lt;/div&gt;
+        ${warningMarkup}
+        &lt;div class=&quot;slot-grid&quot; aria-label=&quot;10 emplacements de sauvegarde&quot;&gt;${slotsMarkup}&lt;/div&gt;`;
+
+        screen.querySelector(&#x27;#cat-menu-home&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { menuMode = &#x27;home&#x27;; pendingSlotAction = null; renderMenu(); });
+        screen.querySelectorAll(&#x27;[data-slot-choice]&#x27;).forEach(button =&gt; {
+          button.addEventListener(&#x27;click&#x27;, () =&gt; {
+            const index = Number(button.dataset.slotChoice);
+            if (isNewGame) {
+              if (saveBank.slots[index]) {
+                pendingSlotAction = { type: &#x27;overwrite&#x27;, index };
+                renderMenu();
+              } else startNewGame(index);
+            } else if (saveBank.slots[index]) continueGame(index);
+          });
+        });
+        screen.querySelectorAll(&#x27;[data-slot-delete]&#x27;).forEach(button =&gt; {
+          button.addEventListener(&#x27;click&#x27;, () =&gt; {
+            pendingSlotAction = { type: &#x27;delete&#x27;, index: Number(button.dataset.slotDelete) };
+            renderMenu();
+          });
+        });
+        const confirmButton = screen.querySelector(&#x27;#cat-slot-confirm&#x27;);
+        if (confirmButton) {
+          confirmButton.addEventListener(&#x27;click&#x27;, () =&gt; {
+            const action = pendingSlotAction;
+            if (!action) return;
+            if (action.type === &#x27;overwrite&#x27;) startNewGame(action.index);
+            else {
+              saveBank.slots[action.index] = null;
+              pendingSlotAction = null;
+              persistSaveBank();
+              renderMenu();
+            }
+          });
+          screen.querySelector(&#x27;#cat-slot-cancel&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { pendingSlotAction = null; renderMenu(); });
+          confirmButton.focus();
+        }
+      }
+
+      function showGame(slotIndex, savedState) {
+        activeSlot = slotIndex;
+        state = normalizeState(savedState);
+        answered = false;
+        pendingSlotAction = null;
+        root.querySelector(&#x27;#cat-menu-screen&#x27;).hidden = true;
+        root.querySelector(&#x27;#cat-game-screen&#x27;).hidden = false;
+        root.querySelector(&#x27;#cat-active-slot&#x27;).textContent = `Sauvegarde ${slotIndex + 1}`;
+        closeResetPanel();
+        renderAll();
+      }
+
+      function startNewGame(slotIndex) {
+        state = freshState();
+        activeSlot = slotIndex;
+        saveState();
+        showGame(slotIndex, state);
+      }
+
+      function continueGame(slotIndex) {
+        const slot = saveBank.slots[slotIndex];
+        if (slot) showGame(slotIndex, slot.state);
+      }
+
+      function returnToMenu() {
+        saveState();
+        closeResetPanel();
+        activeSlot = null;
+        state = freshState();
+        answered = false;
+        menuMode = &#x27;home&#x27;;
+        pendingSlotAction = null;
+        renderMenu();
+      }
 
       function renderAll() {
         renderStats();
@@ -1201,9 +1414,8 @@ html&gt;body{padding:0}&lt;/style&gt;
       function restartEntireGame() {
         state = freshState();
         answered = false;
-        try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
-        try { window.name = &#x27;&#x27;; } catch (_) {}
         closeResetPanel();
+        saveState();
         renderAll();
         root.querySelector(&#x27;#cat-live&#x27;).textContent = &#x27;Toute la progression a été effacée. Retour à la première île.&#x27;;
       }
@@ -1215,11 +1427,13 @@ html&gt;body{padding:0}&lt;/style&gt;
       root.querySelector(&#x27;#cat-reset-island&#x27;).addEventListener(&#x27;click&#x27;, restartCurrentIsland);
       root.querySelector(&#x27;#cat-reset-game&#x27;).addEventListener(&#x27;click&#x27;, restartEntireGame);
       root.querySelector(&#x27;#cat-reset-cancel&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; closeResetPanel(true));
+      root.querySelector(&#x27;#cat-back-menu&#x27;).addEventListener(&#x27;click&#x27;, returnToMenu);
       root.addEventListener(&#x27;keydown&#x27;, event =&gt; {
         if (event.key === &#x27;Escape&#x27; &amp;&amp; !resetPanel.hidden) closeResetPanel(true);
       });
 
-      renderAll();
+      persistSaveBank();
+      renderMenu();
     })();
   &lt;/script&gt;
 &lt;/div&gt;
