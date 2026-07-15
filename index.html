@@ -888,6 +888,8 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .diagram .edge { stroke: var(--foreground); stroke-width: 2; fill: none; }
     #archipel-categories .diagram .soft-edge { stroke: var(--muted-foreground); stroke-width: 1.5; fill: none; stroke-dasharray: 5 5; }
     #archipel-categories .diagram text { fill: var(--foreground); font-family: ui-serif, Georgia, serif; font-size: 14px; }
+    #archipel-categories .diagram foreignObject { overflow: visible; }
+    #archipel-categories .diagram .svg-math-label { display: flex; width: 120px; height: 32px; align-items: center; justify-content: center; color: var(--foreground); }
     #archipel-categories .question-zone { display: grid; gap: 14px; }
     #archipel-categories .course-shell { display: grid; gap: 22px; }
     #archipel-categories .course-progress { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
@@ -904,6 +906,7 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .difficulty-mark.is-on { background: var(--viz-series-2); }
     #archipel-categories .score-note { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; color: var(--muted-foreground); }
     #archipel-categories .score-note strong { color: var(--foreground); }
+    #archipel-categories mjx-container { max-width: 100%; overflow-x: auto; overflow-y: hidden; }
     #archipel-categories .question-label { color: var(--muted-foreground); font-size: 11px; letter-spacing: .13em; text-transform: uppercase; }
     #archipel-categories .question { max-width: 820px; font-size: clamp(17px, 2vw, 21px); font-weight: 500; line-height: 1.45; text-wrap: balance; }
     #archipel-categories .answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -930,16 +933,46 @@ html&gt;body{padding:0}&lt;/style&gt;
       #archipel-categories .roadmap { grid-template-columns: repeat(4, minmax(64px, 1fr)); row-gap: 16px; }
       #archipel-categories .roadmap::before { display: none; }
       #archipel-categories .answers { grid-template-columns: 1fr; }
+      #archipel-categories .quiz-diagram { display: none; }
+      #archipel-categories .play-card { gap: 15px; }
+      #archipel-categories .question-zone { gap: 11px; }
+      #archipel-categories .answers .btn { min-height: 52px; }
     }
     @media (max-width: 430px) {
       #archipel-categories { padding-inline: 0; }
       #archipel-categories .menu-hero { min-height: 610px; padding: 26px 20px; background-position: 70% center; background-image: linear-gradient(180deg, color-mix(in srgb, var(--card) 98%, transparent) 0%, color-mix(in srgb, var(--card) 90%, transparent) 48%, color-mix(in srgb, var(--card) 38%, transparent) 100%), url(&#x27;assets/archipel-hero.png&#x27;); }
       #archipel-categories .display-title { font-size: 44px; }
-      #archipel-categories .stats { grid-template-columns: 1fr; }
-      #archipel-categories .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #archipel-categories .game-shell { gap: 12px; }
+      #archipel-categories .game-header { padding: 4px 2px 10px; gap: 8px; }
+      #archipel-categories .brand-copy .text-small { display: none; }
+      #archipel-categories .game-header-actions { width: 100%; justify-content: space-between; }
+      #archipel-categories .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+      #archipel-categories .viz-stat { min-height: 52px; padding: 8px; }
+      #archipel-categories .route-card { gap: 4px; padding: 8px 6px; }
+      #archipel-categories .route-head { display: none; }
+      #archipel-categories .roadmap { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; row-gap: 9px; }
+      #archipel-categories .island { gap: 0; }
+      #archipel-categories .island .btn { width: 38px; height: 38px; min-height: 38px; }
+      #archipel-categories .island-label { display: none; }
       #archipel-categories .slot-row { align-items: center; }
-      #archipel-categories .diagram { min-height: 150px; padding-inline: 0; }
-      #archipel-categories .diagram svg { height: 150px; }
+      #archipel-categories .play-card { gap: 13px; padding: 14px 12px; }
+      #archipel-categories .mission-head { gap: 8px; }
+      #archipel-categories .mission-progress { width: 100%; grid-template-columns: 1fr auto; align-items: center; justify-items: start; }
+      #archipel-categories .mission-dots { grid-column: 1 / -1; max-width: none; justify-content: flex-start; }
+      #archipel-categories .concept-strip { grid-template-columns: 32px minmax(0, 1fr); gap: 8px; }
+      #archipel-categories .concept-icon { width: 30px; height: 30px; }
+      #archipel-categories .diagram { min-height: 126px; padding-inline: 0; }
+      #archipel-categories .diagram svg { height: 126px; }
+      #archipel-categories .question { font-size: 17px; line-height: 1.4; }
+      #archipel-categories .answers { gap: 7px; }
+      #archipel-categories .action-row { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
+      #archipel-categories .action-row .btn { white-space: normal; }
+      #archipel-categories .course-copy { gap: 11px; line-height: 1.6; }
+      #archipel-categories .course-shell .course-copy { order: 2; }
+      #archipel-categories .course-shell .diagram { order: 3; }
+      #archipel-categories .course-shell .course-actions { order: 4; }
+      #archipel-categories .course-actions { display: grid; grid-template-columns: 1fr 1fr; }
+      #archipel-categories mjx-container { font-size: .94em; }
     }
   &lt;/style&gt;
 
@@ -967,7 +1000,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;span&gt;Choisis l’étendue de la remise à zéro. La progression effacée ne pourra pas être récupérée.&lt;/span&gt;
       &lt;/div&gt;
       &lt;ul class=&quot;reset-details&quot;&gt;
-        &lt;li id=&quot;cat-reset-island-detail&quot;&gt;Île actuelle : renouvelle ses 15 questions et efface son score en cours.&lt;/li&gt;
+        &lt;li id=&quot;cat-reset-island-detail&quot;&gt;Île actuelle : renouvelle sa série de questions et efface son score en cours.&lt;/li&gt;
         &lt;li&gt;Tout le jeu : efface cours parcourus, scores, erreurs et carnet de bord.&lt;/li&gt;
       &lt;/ul&gt;
       &lt;div class=&quot;reset-actions&quot;&gt;
@@ -979,11 +1012,11 @@ html&gt;body{padding:0}&lt;/style&gt;
 
     &lt;div class=&quot;viz-grid stats&quot; aria-label=&quot;Progression&quot;&gt;
       &lt;div class=&quot;card viz-stat&quot;&gt;
-        &lt;span class=&quot;text-muted&quot;&gt;Îles explorées&lt;/span&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Îles&lt;/span&gt;
         &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-islands&quot;&gt;0 / 8&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class=&quot;card viz-stat&quot;&gt;
-        &lt;span class=&quot;text-muted&quot;&gt;Éclats de savoir&lt;/span&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Réponses&lt;/span&gt;
         &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-stars&quot;&gt;0&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class=&quot;card viz-stat&quot;&gt;
@@ -991,7 +1024,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-mistakes&quot;&gt;0&lt;/span&gt;
       &lt;/div&gt;
       &lt;div class=&quot;card viz-stat&quot;&gt;
-        &lt;span class=&quot;text-muted&quot;&gt;Meilleur total&lt;/span&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Score&lt;/span&gt;
         &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-score&quot;&gt;0&lt;/span&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -1020,10 +1053,20 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;/div&gt;
 
   &lt;script&gt;
+    window.MathJax = {
+      tex: { inlineMath: [[&#x27;\\(&#x27;, &#x27;\\)&#x27;]], displayMath: [[&#x27;\\[&#x27;, &#x27;\\]&#x27;]], processEscapes: true },
+      chtml: { matchFontHeight: false },
+      options: { enableMenu: false }
+    };
+  &lt;/script&gt;
+  &lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js&quot;&gt;&lt;/script&gt;
+
+  &lt;script&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;archipel-categories&#x27;);
-      const SAVES_KEY = &#x27;archipel-categories-saves-v3&#x27;;
+      const SAVES_KEY = &#x27;archipel-categories-saves-v5&#x27;;
       const SLOT_COUNT = 10;
+      const QUESTION_COUNTS = [7, 7, 8, 8, 8, 8, 9, 9];
       const arrow = &#x27;&lt;marker id=&quot;arrow&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
       const arrowSoft = &#x27;&lt;marker id=&quot;arrow-soft&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
 
@@ -1043,8 +1086,8 @@ html&gt;body{padding:0}&lt;/style&gt;
           icon: &#x27;◇&#x27;, short: &#x27;Objets&#x27;, name: &#x27;La Plage des Objets&#x27;, concept: &#x27;Objets et morphismes&#x27;, diagram: &#x27;basic&#x27;,
           intro: &#x27;Une catégorie rassemble des objets et des flèches typées entre eux.&#x27;,
           course: [
-            { title: &#x27;Objets, sources et buts&#x27;, body: &#x27;Une catégorie est un univers dans lequel on choisit des objets. Une flèche, aussi appelée morphisme, relie deux objets précis.&#x27;, points: [&#x27;La notation f : A → B se lit « f va de A vers B ».&#x27;, &#x27;A est la source — ou domaine — de f.&#x27;, &#x27;B est le but — ou codomaine — de f.&#x27;], example: &#x27;Dans un réseau de villes, les villes jouent le rôle des objets et un trajet orienté celui d’un morphisme.&#x27; },
-            { title: &#x27;Le type d’une flèche&#x27;, body: &#x27;Le couple source-but fait partie du type de la flèche. Deux flèches qui portent le même nom mais n’ont pas le même type ne sont pas interchangeables.&#x27;, points: [&#x27;On ne peut comparer deux morphismes que s’ils ont même source et même but.&#x27;, &#x27;Hom𝒞(A,B) désignera plus tard la collection de toutes les flèches A → B dans 𝒞.&#x27;], example: &#x27;Une recette Ingrédients → Gâteau et une livraison Entrepôt → Maison décrivent deux transformations de types différents.&#x27; },
+            { title: &#x27;Objets, sources et buts&#x27;, body: &#x27;Une catégorie est un univers dans lequel on choisit des objets. Une flèche, aussi appelée morphisme, relie deux objets précis.&#x27;, points: [&#x27;La notation \\(f\\colon A\\to B\\) se lit « f va de A vers B ».&#x27;, &#x27;A est la source — ou domaine — de f.&#x27;, &#x27;B est le but — ou codomaine — de f.&#x27;], example: &#x27;Dans un réseau de villes, les villes jouent le rôle des objets et un trajet orienté celui d’un morphisme.&#x27; },
+            { title: &#x27;Le type d’une flèche&#x27;, body: &#x27;Le couple source-but fait partie du type de la flèche. Deux flèches qui portent le même nom mais n’ont pas le même type ne sont pas interchangeables.&#x27;, points: [&#x27;On ne peut comparer deux morphismes que s’ils ont même source et même but.&#x27;, &#x27;\\(\\operatorname{Hom}_{\\mathcal C}(A,B)\\) désignera plus tard la collection de toutes les flèches \\(A\\to B\\) dans \\(\\mathcal C\\).&#x27;], example: &#x27;Une recette \\(\\text{Ingrédients}\\to\\text{Gâteau}\\) et une livraison \\(\\text{Entrepôt}\\to\\text{Maison}\\) décrivent deux transformations de types différents.&#x27; },
             { title: &#x27;Premières catégories concrètes&#x27;, body: &#x27;Une catégorie concrète possède des objets mathématiques familiers et des applications qui respectent leur structure.&#x27;, points: [&#x27;Ens : ensembles et fonctions.&#x27;, &#x27;Ab : groupes abéliens et homomorphismes de groupes.&#x27;, &#x27;Top : espaces topologiques et applications continues.&#x27;], example: &#x27;Dans Ens, une fonction f : X → Y est un morphisme. Dans Top, la même fonction n’est un morphisme que si elle est continue.&#x27; },
             { title: &#x27;Ce qu’il faut pour former une catégorie&#x27;, body: &#x27;Les objets et morphismes ne suffisent pas encore : il faudra aussi savoir composer les flèches et disposer d’une identité sur chaque objet.&#x27;, points: [&#x27;Chaque morphisme possède une source et un but uniques.&#x27;, &#x27;La structure doit rester cohérente quand on enchaîne des morphismes.&#x27;], example: &#x27;Les ensembles, fonctions, fonctions identité et composition habituelle forment bien la catégorie Ens.&#x27; }
           ]
@@ -1053,8 +1096,8 @@ html&gt;body{padding:0}&lt;/style&gt;
           icon: &#x27;⇉&#x27;, short: &#x27;Composer&#x27;, name: &#x27;Le Détroit de la Composition&#x27;, concept: &#x27;Composition&#x27;, diagram: &#x27;chain&#x27;,
           intro: &#x27;La composition transforme deux étapes compatibles en une seule flèche.&#x27;,
           course: [
-            { title: &#x27;Quand deux flèches s’emboîtent&#x27;, body: &#x27;Si f : A → B et g : B → C, la sortie de f correspond exactement à l’entrée de g. On peut alors les composer.&#x27;, points: [&#x27;La composée se note g ∘ f : A → C.&#x27;, &#x27;On lit « g après f » : f est exécutée en premier.&#x27;, &#x27;Si les objets intermédiaires ne coïncident pas, la composition n’est pas définie.&#x27;], example: &#x27;Enfiler des chaussettes puis des chaussures se note chaussures ∘ chaussettes.&#x27; },
-            { title: &#x27;Composer dans Ens&#x27;, body: &#x27;Dans Ens, la composition est la composition ordinaire des fonctions.&#x27;, points: [&#x27;(g ∘ f)(x) = g(f(x)).&#x27;, &#x27;Le codomaine de f doit être le domaine de g.&#x27;, &#x27;La fonction composée conserve le type A → C.&#x27;], example: &#x27;Si f double un entier et g ajoute 3, alors (g ∘ f)(4) = 11.&#x27; },
+            { title: &#x27;Quand deux flèches s’emboîtent&#x27;, body: &#x27;Si \\(f\\colon A\\to B\\) et \\(g\\colon B\\to C\\), la sortie de f correspond exactement à l’entrée de g. On peut alors les composer.&#x27;, points: [&#x27;La composée se note \\(g\\circ f\\colon A\\to C\\).&#x27;, &#x27;On lit « g après f » : f est exécutée en premier.&#x27;, &#x27;Si les objets intermédiaires ne coïncident pas, la composition n’est pas définie.&#x27;], example: &#x27;Enfiler des chaussettes puis des chaussures se note \\(\\text{chaussures}\\circ\\text{chaussettes}\\).&#x27;},
+            { title: &#x27;Composer dans Ens&#x27;, body: &#x27;Dans Ens, la composition est la composition ordinaire des fonctions.&#x27;, points: [&#x27;\\((g\\circ f)(x)=g(f(x))\\).&#x27;, &#x27;Le codomaine de f doit être le domaine de g.&#x27;, &#x27;La fonction composée conserve le type \\(A\\to C\\).&#x27;], example: &#x27;Si f double un entier et g ajoute 3, alors \\((g\\circ f)(4)=11\\).&#x27; },
             { title: &#x27;Composer dans Ab et Top&#x27;, body: &#x27;La composée de deux homomorphismes est encore un homomorphisme ; la composée de deux applications continues est encore continue.&#x27;, points: [&#x27;Cette stabilité est indispensable pour former une catégorie.&#x27;, &#x27;La composition dépend généralement de l’ordre : g ∘ f et f ∘ g peuvent différer ou ne pas être tous deux définis.&#x27;], example: &#x27;Dans Top, un chemin continu X → Y suivi d’une application continue Y → Z donne une application continue X → Z.&#x27; },
             { title: &#x27;Lire et vérifier un calcul&#x27;, body: &#x27;Pour contrôler une expression composée, on part de la droite et on suit les types.&#x27;, points: [&#x27;La source finale est celle de la flèche la plus à droite.&#x27;, &#x27;Le but final est celui de la flèche la plus à gauche.&#x27;, &#x27;Chaque objet rencontré au milieu doit se raccorder au suivant.&#x27;], example: &#x27;Avec A →ᶠ B →ᵍ C →ʰ D, l’expression h ∘ g ∘ f a le type A → D.&#x27; }
           ]
@@ -1064,7 +1107,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           intro: &#x27;Chaque objet possède une flèche neutre qui ne le modifie pas.&#x27;,
           course: [
             { title: &#x27;La flèche qui ne change rien&#x27;, body: &#x27;Pour chaque objet A, il existe un morphisme identité idₐ : A → A.&#x27;, points: [&#x27;Sa source et son but sont tous deux A.&#x27;, &#x27;Elle agit comme une étape neutre dans tout trajet.&#x27;, &#x27;Il existe une identité propre à chaque objet.&#x27;], example: &#x27;Dans Ens, idₓ est la fonction x ↦ x sur l’ensemble X.&#x27; },
-            { title: &#x27;Les lois d’unité&#x27;, body: &#x27;Une identité peut être ajoutée avant ou après une flèche sans modifier celle-ci.&#x27;, points: [&#x27;Pour f : A → B, f ∘ idₐ = f.&#x27;, &#x27;Pour f : A → B, idᵦ ∘ f = f.&#x27;, &#x27;Les indices sont imposés par les types.&#x27;], example: &#x27;Ne rien modifier à l’entrée, effectuer f, puis ne rien modifier à la sortie donne toujours f.&#x27; },
+            { title: &#x27;Les lois d’unité&#x27;, body: &#x27;Une identité peut être ajoutée avant ou après une flèche sans modifier celle-ci.&#x27;, points: [&#x27;Pour \\(f\\colon A\\to B\\), \\(f\\circ\\mathrm{id}_A=f\\).&#x27;, &#x27;Pour \\(f\\colon A\\to B\\), \\(\\mathrm{id}_B\\circ f=f\\).&#x27;, &#x27;Les indices sont imposés par les types.&#x27;], example: &#x27;Ne rien modifier à l’entrée, effectuer f, puis ne rien modifier à la sortie donne toujours f.&#x27; },
             { title: &#x27;Identités concrètes&#x27;, body: &#x27;Dans chaque catégorie concrète, l’identité est l’application identité sur l’objet sous-jacent.&#x27;, points: [&#x27;Dans Ab, elle préserve l’addition.&#x27;, &#x27;Dans Top, elle est toujours continue.&#x27;, &#x27;Une identité est unique dès que les lois d’unité sont satisfaites.&#x27;], example: &#x27;Sur ℤ, l’homomorphisme identité envoie tout entier n sur n.&#x27; },
             { title: &#x27;Pourquoi les identités comptent&#x27;, body: &#x27;Les identités permettent de traiter un objet comme un trajet de longueur nulle et rendent les calculs de composition uniformes.&#x27;, points: [&#x27;Elles font partie des axiomes d’une catégorie.&#x27;, &#x27;Un foncteur devra plus tard les préserver.&#x27;], example: &#x27;Dans une catégorie réduite à un seul objet, l’identité est l’élément neutre de la loi de composition.&#x27; }
           ]
@@ -1073,7 +1116,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           icon: &#x27;⋈&#x27;, short: &#x27;Associer&#x27;, name: &#x27;La Chaîne Associative&#x27;, concept: &#x27;Associativité&#x27;, diagram: &#x27;assoc&#x27;,
           intro: &#x27;Les parenthèses changent l’ordre du calcul, jamais le morphisme obtenu.&#x27;,
           course: [
-            { title: &#x27;La loi associative&#x27;, body: &#x27;Avec f : A → B, g : B → C et h : C → D, les deux façons de regrouper la composition donnent la même flèche A → D.&#x27;, points: [&#x27;h ∘ (g ∘ f) = (h ∘ g) ∘ f.&#x27;, &#x27;On peut donc écrire h ∘ g ∘ f sans parenthèses.&#x27;, &#x27;L’ordre des flèches, lui, ne change pas.&#x27;], example: &#x27;Pour des fonctions, les deux membres appliquent successivement f, puis g, puis h.&#x27; },
+            { title: &#x27;La loi associative&#x27;, body: &#x27;Avec \\(f\\colon A\\to B\\), \\(g\\colon B\\to C\\) et \\(h\\colon C\\to D\\), les deux façons de regrouper la composition donnent la même flèche \\(A\\to D\\).&#x27;, points: [&#x27;\\(h\\circ(g\\circ f)=(h\\circ g)\\circ f\\).&#x27;, &#x27;On peut donc écrire \\(h\\circ g\\circ f\\) sans parenthèses.&#x27;, &#x27;L’ordre des flèches, lui, ne change pas.&#x27;], example: &#x27;Pour des fonctions, les deux membres appliquent successivement f, puis g, puis h.&#x27; },
             { title: &#x27;Associer n’est pas commuter&#x27;, body: &#x27;L’associativité déplace des parenthèses. La commutativité échangerait l’ordre des opérations : ce sont deux propriétés différentes.&#x27;, points: [&#x27;On ne conclut jamais g ∘ f = f ∘ g.&#x27;, &#x27;Souvent, une seule des deux expressions est même bien typée.&#x27;], example: &#x27;Ajouter 1 puis doubler ne donne pas le même résultat que doubler puis ajouter 1.&#x27; },
             { title: &#x27;Chemins et calculs&#x27;, body: &#x27;Dans une longue chaîne, l’associativité autorise un calcul local sans ambiguïté sur le résultat global.&#x27;, points: [&#x27;On peut simplifier une sous-chaîne puis reprendre le trajet.&#x27;, &#x27;Toutes les parenthésisations compatibles sont égales.&#x27;], example: &#x27;Un compilateur peut regrouper plusieurs transformations de données sans changer leur ordre.&#x27; },
             { title: &#x27;Une catégorie à un objet&#x27;, body: &#x27;Une catégorie possédant un seul objet correspond à un monoïde : ses morphismes sont les éléments, la composition est la loi et l’identité est l’élément neutre.&#x27;, points: [&#x27;La loi du monoïde est associative.&#x27;, &#x27;Cette idée montre que les catégories généralisent des structures algébriques.&#x27;], example: &#x27;Les entiers naturels avec l’addition forment un monoïde, donc une catégorie à un objet.&#x27; }
@@ -1084,7 +1127,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           intro: &#x27;Un diagramme commute lorsque ses chemins parallèles produisent la même flèche.&#x27;,
           course: [
             { title: &#x27;Dessiner une situation&#x27;, body: &#x27;Un diagramme place les objets comme des nœuds et les morphismes comme des flèches orientées.&#x27;, points: [&#x27;Un chemin représente une composition.&#x27;, &#x27;Deux chemins sont comparables s’ils ont même départ et même arrivée.&#x27;, &#x27;Le dessin aide à contrôler les types.&#x27;], example: &#x27;Dans un triangle A → B → C avec une flèche directe A → C, deux routes relient A à C.&#x27; },
-            { title: &#x27;Commuter&#x27;, body: &#x27;Le diagramme commute si tous les chemins ayant mêmes extrémités donnent le même morphisme composé.&#x27;, points: [&#x27;Dans le triangle, h = g ∘ f.&#x27;, &#x27;Dans un carré, droite puis bas égale bas puis droite.&#x27;, &#x27;La longueur graphique des chemins ne joue aucun rôle.&#x27;], example: &#x27;Une conversion directe et une conversion en deux étapes sont cohérentes si elles produisent exactement le même résultat.&#x27; },
+            { title: &#x27;Commuter&#x27;, body: &#x27;Le diagramme commute si tous les chemins ayant mêmes extrémités donnent le même morphisme composé.&#x27;, points: [&#x27;Dans le triangle, \\(h=g\\circ f\\).&#x27;, &#x27;Dans un carré, droite puis bas égale bas puis droite.&#x27;, &#x27;La longueur graphique des chemins ne joue aucun rôle.&#x27;], example: &#x27;Une conversion directe et une conversion en deux étapes sont cohérentes si elles produisent exactement le même résultat.&#x27; },
             { title: &#x27;Vérifier dans Ens&#x27;, body: &#x27;Pour montrer qu’un diagramme de fonctions commute, on peut partir d’un élément arbitraire et comparer ses images le long des deux chemins.&#x27;, points: [&#x27;L’égalité doit valoir pour tout élément de la source.&#x27;, &#x27;Cette méthode est propre aux catégories concrètes où l’on peut parler d’éléments.&#x27;], example: &#x27;Pour prouver h = g ∘ f, on vérifie h(x) = g(f(x)) pour tout x.&#x27; },
             { title: &#x27;Le langage des propriétés&#x27;, body: &#x27;Les diagrammes expriment de nombreuses lois sans accumuler les formules.&#x27;, points: [&#x27;Les lois d’identité sont des diagrammes commutatifs.&#x27;, &#x27;La naturalité sera exprimée par un carré commutatif.&#x27;, &#x27;Les propriétés universelles comparent elles aussi des chemins.&#x27;], example: &#x27;Un même carré pourra résumer la cohérence de toute une famille de transformations.&#x27; }
           ]
@@ -1094,8 +1137,8 @@ html&gt;body{padding:0}&lt;/style&gt;
           intro: &#x27;Un foncteur transporte une catégorie vers une autre sans briser sa structure.&#x27;,
           course: [
             { title: &#x27;Transporter objets et flèches&#x27;, body: &#x27;Un foncteur F : 𝒞 → 𝒟 associe à chaque objet A de 𝒞 un objet F(A) de 𝒟, et à chaque morphisme f : A → B un morphisme F(f) : F(A) → F(B).&#x27;, points: [&#x27;La direction des flèches est conservée.&#x27;, &#x27;Sources et buts sont transportés avec leurs morphismes.&#x27;, &#x27;Le foncteur agit sur toute la catégorie.&#x27;], example: &#x27;Le foncteur d’oubli U : Ab → Ens garde l’ensemble sous-jacent et oublie l’addition.&#x27; },
-            { title: &#x27;Préserver les identités&#x27;, body: &#x27;Un foncteur doit envoyer chaque identité sur l’identité correspondante.&#x27;, points: [&#x27;F(idₐ) = id_F(A).&#x27;, &#x27;Une flèche neutre reste donc neutre après transport.&#x27;], example: &#x27;Sous le foncteur d’oubli, l’identité d’un groupe abélien devient la même fonction identité sur son ensemble.&#x27; },
-            { title: &#x27;Préserver la composition&#x27;, body: &#x27;Le transport d’un chemin composé est le chemin composé des transports.&#x27;, points: [&#x27;F(g ∘ f) = F(g) ∘ F(f).&#x27;, &#x27;Un diagramme commutatif reste commutatif après application de F.&#x27;], example: &#x27;Oublier la structure après avoir composé deux homomorphismes revient à composer les fonctions sous-jacentes.&#x27; },
+            { title: &#x27;Préserver les identités&#x27;, body: &#x27;Un foncteur doit envoyer chaque identité sur l’identité correspondante.&#x27;, points: [&#x27;\\(F(\\mathrm{id}_A)=\\mathrm{id}_{F(A)}\\).&#x27;, &#x27;Une flèche neutre reste donc neutre après transport.&#x27;], example: &#x27;Sous le foncteur d’oubli, l’identité d’un groupe abélien devient la même fonction identité sur son ensemble.&#x27; },
+            { title: &#x27;Préserver la composition&#x27;, body: &#x27;Le transport d’un chemin composé est le chemin composé des transports.&#x27;, points: [&#x27;\\(F(g\\circ f)=F(g)\\circ F(f)\\).&#x27;, &#x27;Un diagramme commutatif reste commutatif après application de F.&#x27;], example: &#x27;Oublier la structure après avoir composé deux homomorphismes revient à composer les fonctions sous-jacentes.&#x27; },
             { title: &#x27;Exemples et nuances&#x27;, body: &#x27;Il existe des foncteurs d’inclusion, d’oubli, constants ou construits à partir d’objets.&#x27;, points: [&#x27;Un foncteur constant envoie tous les objets sur un même objet et toutes les flèches sur son identité.&#x27;, &#x27;Un foncteur fidèle ne confond pas deux morphismes distincts.&#x27;, &#x27;Un foncteur plein atteint tous les morphismes entre les objets de son image.&#x27;], example: &#x27;L’inclusion des espaces topologiques discrets dans Top est un foncteur.&#x27; }
           ]
         },
@@ -1104,7 +1147,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           intro: &#x27;Une transformation naturelle compare deux foncteurs de façon uniforme.&#x27;,
           course: [
             { title: &#x27;Une flèche pour chaque objet&#x27;, body: &#x27;Pour deux foncteurs F,G : 𝒞 → 𝒟, une transformation naturelle η : F ⇒ G fournit pour chaque objet A une composante ηₐ : F(A) → G(A).&#x27;, points: [&#x27;Toutes les composantes vivent dans 𝒟.&#x27;, &#x27;Elles ont un sens commun : passer de la construction F à la construction G.&#x27;], example: &#x27;Une famille d’applications ηₓ peut comparer deux façons de transformer chaque ensemble X.&#x27; },
-            { title: &#x27;Le carré de naturalité&#x27;, body: &#x27;Les composantes doivent être compatibles avec chaque morphisme f : A → B de 𝒞.&#x27;, points: [&#x27;G(f) ∘ ηₐ = ηᵦ ∘ F(f).&#x27;, &#x27;Descendre puis avancer donne le même résultat qu’avancer puis descendre.&#x27;, &#x27;Cette égalité doit valoir pour toutes les flèches f.&#x27;], example: &#x27;Le carré reliant F(A), F(B), G(A) et G(B) doit commuter.&#x27; },
+            { title: &#x27;Le carré de naturalité&#x27;, body: &#x27;Les composantes doivent être compatibles avec chaque morphisme \\(f\\colon A\\to B\\) de \\(\\mathcal C\\).&#x27;, points: [&#x27;\\(G(f)\\circ\\eta_A=\\eta_B\\circ F(f)\\).&#x27;, &#x27;Descendre puis avancer donne le même résultat qu’avancer puis descendre.&#x27;, &#x27;Cette égalité doit valoir pour toutes les flèches f.&#x27;], example: &#x27;Le carré reliant \\(F(A)\\), \\(F(B)\\), \\(G(A)\\) et \\(G(B)\\) doit commuter.&#x27; },
             { title: &#x27;Exemples&#x27;, body: &#x27;L’identité de chaque F(A) forme une transformation naturelle id_F : F ⇒ F.&#x27;, points: [&#x27;Les composantes peuvent être composées verticalement.&#x27;, &#x27;Si toutes les composantes sont des isomorphismes, η est un isomorphisme naturel.&#x27;, &#x27;Une simple famille de flèches n’est pas forcément naturelle.&#x27;], example: &#x27;L’application canonique d’un espace vectoriel vers son bidual est naturelle ; choisir arbitrairement une base ne l’est pas.&#x27; },
             { title: &#x27;La catégorie des foncteurs&#x27;, body: &#x27;Pour 𝒞 et 𝒟 fixées, on peut former une catégorie dont les objets sont les foncteurs 𝒞 → 𝒟 et les morphismes sont les transformations naturelles.&#x27;, points: [&#x27;L’identité est la transformation identité.&#x27;, &#x27;La composition est effectuée composante par composante.&#x27;], example: &#x27;Les transformations naturelles sont donc elles-mêmes des morphismes à un niveau supérieur.&#x27; }
           ]
@@ -1113,9 +1156,9 @@ html&gt;body{padding:0}&lt;/style&gt;
           icon: &#x27;⊣&#x27;, short: &#x27;Adjonctions&#x27;, name: &#x27;Le Maelström des Adjonctions&#x27;, concept: &#x27;Adjonctions&#x27;, diagram: &#x27;adjunction&#x27;,
           intro: &#x27;Une adjonction exprime une correspondance naturelle entre deux façons de décrire un morphisme.&#x27;,
           course: [
-            { title: &#x27;Comprendre Hom&#x27;, body: &#x27;Pour des objets A et B d’une catégorie 𝒞, Hom𝒞(A,B) est la collection de tous les morphismes de A vers B.&#x27;, points: [&#x27;Dans Ens, HomEns(X,Y) est l’ensemble des fonctions X → Y.&#x27;, &#x27;Dans Ab, HomAb(A,B) est l’ensemble des homomorphismes A → B.&#x27;, &#x27;L’indice indique dans quelle catégorie les morphismes sont pris.&#x27;], example: &#x27;Si X possède 2 éléments et Y en possède 3, HomEns(X,Y) contient 3² = 9 fonctions.&#x27; },
-            { title: &#x27;La bijection d’adjonction&#x27;, body: &#x27;Pour F : 𝒞 → 𝒟 et G : 𝒟 → 𝒞, écrire F ⊣ G signifie qu’il existe des bijections naturelles&#x27;, points: [&#x27;Hom𝒟(F(A),B) ≅ Hom𝒞(A,G(B)).&#x27;, &#x27;F est l’adjoint à gauche et G l’adjoint à droite.&#x27;, &#x27;La correspondance doit être naturelle en A et en B, pas seulement exister au cas par cas.&#x27;], example: &#x27;Donner une flèche F(A) → B revient exactement à donner une flèche A → G(B).&#x27; },
-            { title: &#x27;Libre et oubli&#x27;, body: &#x27;Le foncteur groupe abélien libre ℤ[-] : Ens → Ab est adjoint à gauche du foncteur d’oubli U : Ab → Ens.&#x27;, points: [&#x27;HomAb(ℤ[X],A) ≅ HomEns(X,U(A)).&#x27;, &#x27;Une fonction choisissant dans A l’image de chaque générateur s’étend en un unique homomorphisme.&#x27;, &#x27;L’adjoint gauche construit librement ; l’adjoint droit oublie ou contraint souvent.&#x27;], example: &#x27;Une fonction X → U(A) détermine entièrement l’homomorphisme ℤ[X] → A.&#x27; },
+            { title: &#x27;Comprendre Hom&#x27;, body: &#x27;Pour des objets A et B d’une catégorie \\(\\mathcal C\\), \\(\\operatorname{Hom}_{\\mathcal C}(A,B)\\) est la collection de tous les morphismes de A vers B.&#x27;, points: [&#x27;Dans Ens, \\(\\operatorname{Hom}_{\\mathbf{Ens}}(X,Y)\\) est l’ensemble des fonctions \\(X\\to Y\\).&#x27;, &#x27;Dans Ab, \\(\\operatorname{Hom}_{\\mathbf{Ab}}(A,B)\\) est l’ensemble des homomorphismes \\(A\\to B\\).&#x27;, &#x27;L’indice indique dans quelle catégorie les morphismes sont pris.&#x27;], example: &#x27;Si X possède 2 éléments et Y en possède 3, \\(\\operatorname{Hom}_{\\mathbf{Ens}}(X,Y)\\) contient \\(3^2=9\\) fonctions.&#x27; },
+            { title: &#x27;La bijection d’adjonction&#x27;, body: &#x27;Pour \\(F\\colon\\mathcal C\\to\\mathcal D\\) et \\(G\\colon\\mathcal D\\to\\mathcal C\\), écrire \\(F\\dashv G\\) signifie qu’il existe des bijections naturelles&#x27;, points: [&#x27;\\(\\operatorname{Hom}_{\\mathcal D}(F(A),B)\\cong\\operatorname{Hom}_{\\mathcal C}(A,G(B))\\).&#x27;, &#x27;F est l’adjoint à gauche et G l’adjoint à droite.&#x27;, &#x27;La correspondance doit être naturelle en A et en B, pas seulement exister au cas par cas.&#x27;], example: &#x27;Donner une flèche \\(F(A)\\to B\\) revient exactement à donner une flèche \\(A\\to G(B)\\).&#x27; },
+            { title: &#x27;Libre et oubli&#x27;, body: &#x27;Le foncteur groupe abélien libre ℤ[-] : Ens → Ab est adjoint à gauche du foncteur d’oubli U : Ab → Ens.&#x27;, points: [&#x27;\\(\\operatorname{Hom}_{\\mathbf{Ab}}(\\mathbb Z[X],A)\\cong\\operatorname{Hom}_{\\mathbf{Ens}}(X,U(A))\\).&#x27;, &#x27;Une fonction choisissant dans A l’image de chaque générateur s’étend en un unique homomorphisme.&#x27;, &#x27;L’adjoint gauche construit librement ; l’adjoint droit oublie ou contraint souvent.&#x27;], example: &#x27;Une fonction X → U(A) détermine entièrement l’homomorphisme ℤ[X] → A.&#x27; },
             { title: &#x27;Unité, counité et autres exemples&#x27;, body: &#x27;Une adjonction possède une unité η : id𝒞 ⇒ G∘F et une counité ε : F∘G ⇒ id𝒟, reliées par les identités triangulaires.&#x27;, points: [&#x27;Une adjonction n’est pas forcément une équivalence.&#x27;, &#x27;Dans Top, le foncteur espace discret est adjoint à gauche du foncteur d’oubli Top → Ens.&#x27;, &#x27;Si les produits existent, le foncteur diagonal Δ est adjoint à gauche du foncteur produit.&#x27;], example: &#x27;L’unité en X envoie chaque élément de X vers le générateur correspondant du groupe libre ℤ[X].&#x27; }
           ]
         }
@@ -1149,6 +1192,111 @@ html&gt;body{padding:0}&lt;/style&gt;
         return copy;
       }
 
+      function toTex(value) {
+        return String(value)
+          .replace(/id𝒞/g, &#x27;\\mathrm{id}_{\\mathcal C}&#x27;)
+          .replace(/id𝒟/g, &#x27;\\mathrm{id}_{\\mathcal D}&#x27;)
+          .replace(/idₐ/g, &#x27;\\mathrm{id}_{A}&#x27;)
+          .replace(/idᵦ/g, &#x27;\\mathrm{id}_{B}&#x27;)
+          .replace(/idₓ/g, &#x27;\\mathrm{id}_{X}&#x27;)
+          .replace(/id_([FG])\(([^)]+)\)/g, &#x27;\\mathrm{id}_{$1($2)}&#x27;)
+          .replace(/id_([A-Z])/g, &#x27;\\mathrm{id}_{$1}&#x27;)
+          .replace(/id_F/g, &#x27;\\mathrm{id}_F&#x27;)
+          .replace(/id_G/g, &#x27;\\mathrm{id}_G&#x27;)
+          .replace(/Hom_/g, &#x27;\\operatorname{Hom}_&#x27;)
+          .replace(/(?&lt;!\\operatorname\{)\bHom\b/g, &#x27;\\operatorname{Hom}&#x27;)
+          .replace(/(?&lt;!\\mathrm\{)\bid\b/g, &#x27;\\mathrm{id}&#x27;)
+          .replace(/Ens/g, &#x27;\\mathbf{Ens}&#x27;)
+          .replace(/Ab/g, &#x27;\\mathbf{Ab}&#x27;)
+          .replace(/Top/g, &#x27;\\mathbf{Top}&#x27;)
+          .replace(/𝒞/g, &#x27;\\mathcal C&#x27;)
+          .replace(/𝒟/g, &#x27;\\mathcal D&#x27;)
+          .replace(/ℤ/g, &#x27;\\mathbb Z&#x27;)
+          .replace(/ℕ/g, &#x27;\\mathbb N&#x27;)
+          .replace(/∅/g, &#x27;\\varnothing&#x27;)
+          .replace(/ηₐ/g, &#x27;\\eta_A&#x27;)
+          .replace(/ηᵦ/g, &#x27;\\eta_B&#x27;)
+          .replace(/θₐ/g, &#x27;\\theta_A&#x27;)
+          .replace(/α/g, &#x27;\\alpha&#x27;)
+          .replace(/β/g, &#x27;\\beta&#x27;)
+          .replace(/γ/g, &#x27;\\gamma&#x27;)
+          .replace(/δ/g, &#x27;\\delta&#x27;)
+          .replace(/ε/g, &#x27;\\varepsilon&#x27;)
+          .replace(/η/g, &#x27;\\eta&#x27;)
+          .replace(/θ/g, &#x27;\\theta&#x27;)
+          .replace(/→/g, &#x27;\\to &#x27;)
+          .replace(/←/g, &#x27;\\leftarrow &#x27;)
+          .replace(/⇒/g, &#x27;\\Rightarrow &#x27;)
+          .replace(/⊣/g, &#x27;\\dashv &#x27;)
+          .replace(/≅/g, &#x27;\\cong &#x27;)
+          .replace(/∘/g, &#x27;\\circ &#x27;)
+          .replace(/∈/g, &#x27;\\in &#x27;)
+          .replace(/×/g, &#x27;\\times &#x27;)
+          .replace(/↦/g, &#x27;\\mapsto &#x27;)
+          .replace(/²/g, &#x27;^2&#x27;)
+          .replace(/\s*:\s*/g, &#x27;\\colon &#x27;)
+          .replace(/\s+/g, &#x27; &#x27;)
+          .trim();
+      }
+
+      function mathText(value) {
+        const stored = [];
+        const hold = math =&gt; `,¤${stored.push(math) - 1},`;
+        const escapeAttribute = text =&gt; String(text)
+          .replace(/&amp;/g, &#x27;&amp;amp;&#x27;)
+          .replace(/&quot;/g, &#x27;&amp;quot;&#x27;)
+          .replace(/&lt;/g, &#x27;&amp;lt;&#x27;)
+          .replace(/&gt;/g, &#x27;&amp;gt;&#x27;);
+        const texFallback = tex =&gt; String(tex)
+          .replace(/\\operatorname\{Hom\}/g, &#x27;Hom&#x27;)
+          .replace(/\\mathrm\{id\}/g, &#x27;id&#x27;)
+          .replace(/\\mathcal\s*C/g, &#x27;𝒞&#x27;)
+          .replace(/\\mathcal\s*D/g, &#x27;𝒟&#x27;)
+          .replace(/\\mathbf\{(Ens|Ab|Top)\}/g, &#x27;$1&#x27;)
+          .replace(/\\mathbb\s*Z/g, &#x27;ℤ&#x27;)
+          .replace(/\\mathbb\s*N/g, &#x27;ℕ&#x27;)
+          .replace(/\\varnothing/g, &#x27;∅&#x27;)
+          .replace(/\\varepsilon/g, &#x27;ε&#x27;)
+          .replace(/\\(alpha|beta|gamma|delta|eta|theta)/g, (_, name) =&gt; ({ alpha: &#x27;α&#x27;, beta: &#x27;β&#x27;, gamma: &#x27;γ&#x27;, delta: &#x27;δ&#x27;, eta: &#x27;η&#x27;, theta: &#x27;θ&#x27; }[name]))
+          .replace(/\\colon/g, &#x27;:&#x27;)
+          .replace(/\\to/g, &#x27;→&#x27;)
+          .replace(/\\leftarrow/g, &#x27;←&#x27;)
+          .replace(/\\Rightarrow/g, &#x27;⇒&#x27;)
+          .replace(/\\dashv/g, &#x27;⊣&#x27;)
+          .replace(/\\cong/g, &#x27;≅&#x27;)
+          .replace(/\\circ/g, &#x27;∘&#x27;)
+          .replace(/\\in/g, &#x27;∈&#x27;)
+          .replace(/\\times/g, &#x27;×&#x27;)
+          .replace(/\\mapsto/g, &#x27;↦&#x27;)
+          .replace(/\\text\{([^}]*)\}/g, &#x27;$1&#x27;)
+          .replace(/[{}]/g, &#x27;&#x27;)
+          .replace(/\s+/g, &#x27; &#x27;)
+          .trim();
+        const mathSpan = (tex, fallback = texFallback(tex)) =&gt; `&lt;span class=&quot;math-inline&quot; data-math-tex=&quot;${escapeAttribute(tex)}&quot; data-math-fallback=&quot;${escapeAttribute(fallback)}&quot; aria-label=&quot;${escapeAttribute(fallback)}&quot;&gt;${escapeAttribute(fallback)}&lt;/span&gt;`;
+        const wrapTex = (tex, fallback) =&gt; hold(mathSpan(tex, fallback));
+        const wrap = expression =&gt; wrapTex(toTex(expression), expression);
+        let text = String(value).replace(/\\\(([\s\S]*?)\\\)/g, (_, tex) =&gt; wrapTex(tex));
+        text = text.replace(/Hom(𝒞|𝒟|Ens|Ab|Top)\(([^)]+)\)/g, (_, category, args) =&gt; wrap(`Hom_${category}(${args})`));
+        text = text.replace(/([A-Z𝒞𝒟]+\s*(?:→|←)\s*[A-Z𝒞𝒟]+\s*:\s*[A-Za-zΑ-ω]+)/gu, wrap);
+        text = text.replace(/([A-Za-zΑ-ωℤΔ]+(?:\[[^\]]+\])?)\s*:\s*(Ens|Ab|Top|𝒞|𝒟|[A-Z]|F\([A-Z]\)|G\([A-Z]\))\s*→\s*(Ens|Ab|Top|𝒞|𝒟|[A-Z]|F\([A-Z]\)|G\([A-Z]\))/g, wrap);
+        text = text.replace(/((?:[^\s,.;:«»]+\s*:\s*)?[^\s,.;:«»]+(?:\s*(?:→|←|⇒)\s*[^\s,.;:«»]+)+)/g, wrap);
+        text = text.replace(/([^\s,.;:«»]+(?:\s*(?:∘|=|≅|⊣|∈|↦|×)\s*[^\s,.;:«»]+)+)/g, wrap);
+        text = text.replace(/id(?:𝒞|𝒟|[ₐᵦₓ]|_[A-Z]|_[FG](?:\([^)]+\))?)/g, wrap);
+        text = text.replace(/\b([FGU])\(([A-DXYZ])\)/g, wrap);
+        text = text.replace(/(?&lt;![\p{L}\p{N}_])(id(?:[ₐᵦₓ])?|Hom|𝒞|𝒟|ℤ|ℕ|[ηθ](?:[ₐᵦ])?|[αβγδε])(?![\p{L}\p{N}_])/gu, match =&gt; wrap(match));
+        text = text.replace(/\b(Ens|Ab|Top)\b/g, match =&gt; wrap(match));
+        text = text.replace(/(?&lt;![\p{L}\p{N}_])([A-Z]|e|f|g|h|k|n|p|q|r|s|u|v|w|x)(?![\p{L}\p{N}_])/gu, match =&gt; wrap(match));
+        return text.replace(/,¤(\d+),/g, (_, index) =&gt; stored[Number(index)]);
+      }
+
+      function diagramMarkup(key) {
+        return diagrams[key].replace(/&lt;text x=&quot;([\d.]+)&quot; y=&quot;([\d.]+)&quot; text-anchor=&quot;middle&quot;&gt;([^&lt;]+)&lt;\/text&gt;/g, (_, x, y, label) =&gt; {
+          const left = Number(x) - 60;
+          const top = Number(y) - 16;
+          return `&lt;foreignObject x=&quot;${left}&quot; y=&quot;${top}&quot; width=&quot;120&quot; height=&quot;32&quot;&gt;&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;svg-math-label&quot;&gt;${mathText(label)}&lt;/div&gt;&lt;/foreignObject&gt;`;
+        });
+      }
+
       function questionPool(levelIndex, seed) {
         const rng = seededRandom(`${seed}:symbols:${levelIndex}`);
         const objectSets = [[&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;], [&#x27;X&#x27;,&#x27;Y&#x27;,&#x27;Z&#x27;,&#x27;W&#x27;], [&#x27;P&#x27;,&#x27;Q&#x27;,&#x27;R&#x27;,&#x27;S&#x27;], [&#x27;U&#x27;,&#x27;V&#x27;,&#x27;W&#x27;,&#x27;T&#x27;]];
@@ -1157,15 +1305,15 @@ html&gt;body{padding:0}&lt;/style&gt;
         const [f,g,h,k] = arrowSets[Math.floor(rng() * arrowSets.length)];
         const pools = [
           [
-            Q(&#x27;o1&#x27;,1,`Dans ${f} : ${A} → ${B}, quelle est la source de ${f} ?`,A,[B,C,D,`${A} → ${B}`],`La source est l’objet placé avant la flèche : ${A}.`),
-            Q(&#x27;o2&#x27;,1,`Dans ${f} : ${A} → ${B}, quel est le but de ${f} ?`,B,[A,C,D,`${A} → ${B}`],`Le but est l’objet placé après la flèche : ${B}.`),
-            Q(&#x27;o3&#x27;,1,`Quelle écriture signifie que ${f} va de ${A} vers ${B} ?`,`${f} : ${A} → ${B}`,[`${f} : ${B} → ${A}`,`${A} : ${f} → ${B}`,`${B} : ${A} → ${f}`,`${f} = ${A} × ${B}`],`Le type complet d’un morphisme indique son nom, sa source et son but.`),
-            Q(&#x27;o4&#x27;,1,&#x27;Dans Ens, quels sont les morphismes ?&#x27;, &#x27;Les fonctions entre ensembles&#x27;,[&#x27;Les nombres premiers&#x27;,&#x27;Les sous-ensembles seulement&#x27;,&#x27;Les homéomorphismes seulement&#x27;,&#x27;Les groupes abéliens&#x27;],`Ens a pour objets les ensembles et pour morphismes toutes les fonctions.`),
-            Q(&#x27;o5&#x27;,2,&#x27;Dans Ab, quels sont les objets ?&#x27;, &#x27;Les groupes abéliens&#x27;,[&#x27;Les espaces topologiques&#x27;,&#x27;Les anneaux non commutatifs seulement&#x27;,&#x27;Les fonctions continues&#x27;,&#x27;Les ensembles finis seulement&#x27;],`Ab est la catégorie des groupes abéliens et des homomorphismes.`),
-            Q(&#x27;o6&#x27;,2,&#x27;Dans Top, quelle application est un morphisme ?&#x27;, &#x27;Une application continue&#x27;,[&#x27;Toute relation binaire&#x27;,&#x27;Une application forcément bijective&#x27;,&#x27;Une suite numérique uniquement&#x27;,&#x27;Une application discontinue quelconque&#x27;],`Les morphismes de Top sont exactement les applications continues.`),
+            Q(&#x27;o1&#x27;,1,`Dans ${f} : ${A} → ${B}, quelle est la source de ${f} ?`,A,[B,f,`${A} → ${B}`],`La source est l’objet placé avant la flèche : ${A}.`),
+            Q(&#x27;o2&#x27;,1,`Dans ${f} : ${A} → ${B}, quel est le but de ${f} ?`,B,[A,f,`${A} → ${B}`],`Le but est l’objet placé après la flèche : ${B}.`),
+            Q(&#x27;o3&#x27;,1,`Quelle écriture signifie que ${f} va de ${A} vers ${B} ?`,`${f} : ${A} → ${B}`,[`${f} : ${B} → ${A}`,`${A} → ${B} : ${f}`,`${f} : ${A} ← ${B}`],`Le type complet d’un morphisme indique son nom, sa source et son but.`),
+            Q(&#x27;o4&#x27;,1,&#x27;Dans Ens, quels sont les morphismes ?&#x27;, &#x27;Toutes les fonctions entre ensembles&#x27;,[&#x27;Seulement les fonctions continues&#x27;,&#x27;Seulement les bijections&#x27;,&#x27;Seulement les injections&#x27;],`Ens a pour objets les ensembles et pour morphismes toutes les fonctions.`),
+            Q(&#x27;o5&#x27;,2,&#x27;Dans Ab, quels sont les objets ?&#x27;, &#x27;Les groupes abéliens&#x27;,[&#x27;Tous les groupes, même non commutatifs&#x27;,&#x27;Les anneaux commutatifs&#x27;,&#x27;Les ensembles munis d’une topologie&#x27;],`Ab est la catégorie des groupes abéliens et des homomorphismes.`),
+            Q(&#x27;o6&#x27;,2,&#x27;Dans Top, quelle application est toujours un morphisme ?&#x27;, &#x27;Une application continue&#x27;,[&#x27;Une fonction quelconque entre les ensembles sous-jacents&#x27;,&#x27;Une bijection qui n’est pas continue&#x27;,&#x27;Une application ouverte mais non continue&#x27;],`Les morphismes de Top sont exactement les applications continues.`),
             Q(&#x27;o7&#x27;,2,`Deux morphismes peuvent-ils être égaux si l’un est ${A} → ${B} et l’autre ${A} → ${C}, avec ${B} ≠ ${C} ?`,&#x27;Non, leurs types diffèrent&#x27;,[&#x27;Oui, s’ils portent le même nom&#x27;,&#x27;Oui, s’ils ont la même source&#x27;,&#x27;Toujours dans Ens&#x27;,&#x27;Seulement si la source est vide&#x27;],`L’égalité de morphismes exige la même source et le même but.`),
-            Q(&#x27;o8&#x27;,2,`Que rassemble Hom𝒞(${A},${B}) ?`,`Les morphismes ${A} → ${B} dans 𝒞`,[`Les morphismes ${B} → ${A}`,`Les objets entre ${A} et ${B}`,`Les identités de 𝒞`,`Les foncteurs vers 𝒞`],`Hom𝒞(${A},${B}) rassemble toutes les flèches de ${A} vers ${B}.`),
-            Q(&#x27;o9&#x27;,3,&#x27;Laquelle décrit une catégorie concrète ?&#x27;, &#x27;Des objets structurés et des applications qui préservent cette structure&#x27;,[&#x27;Une catégorie sans morphismes&#x27;,&#x27;Un ensemble de symboles sans types&#x27;,&#x27;Une catégorie dont tous les objets sont égaux&#x27;,&#x27;Une liste ordonnée de nombres&#x27;],`Ens, Ab et Top sont concrètes : leurs morphismes sont des applications particulières.`),
+            Q(&#x27;o8&#x27;,2,`Que rassemble \\(\\operatorname{Hom}_{\\mathcal C}(${A},${B})\\) ?`,`Les morphismes \\(${A}\\to ${B}\\) dans \\(\\mathcal C\\)`,[`Les morphismes \\(${B}\\to ${A}\\)`,`Les objets situés entre ${A} et ${B}`,`Les identités de \\(\\mathcal C\\)`,`Les foncteurs vers \\(\\mathcal C\\)`],`\\(\\operatorname{Hom}_{\\mathcal C}(${A},${B})\\) rassemble toutes les flèches de ${A} vers ${B}.`),
+            Q(&#x27;o9&#x27;,3,&#x27;Laquelle décrit une catégorie concrète ?&#x27;, &#x27;Des objets structurés et des applications qui préservent cette structure&#x27;,[&#x27;Des objets structurés et toutes les fonctions entre leurs ensembles sous-jacents&#x27;,&#x27;Une catégorie où tous les morphismes doivent être inversibles&#x27;,&#x27;Une collection d’objets sans identités ni composition&#x27;,&#x27;Une catégorie où chaque paire d’objets possède exactement un morphisme&#x27;],`Ens, Ab et Top sont concrètes : leurs morphismes sont des applications particulières qui respectent la structure choisie.`),
             Q(&#x27;o10&#x27;,3,&#x27;Une fonction entre deux espaces topologiques est-elle toujours un morphisme de Top ?&#x27;, &#x27;Non, elle doit être continue&#x27;,[&#x27;Oui, toute fonction convient&#x27;,&#x27;Seulement si elle est constante&#x27;,&#x27;Seulement si elle est surjective&#x27;,&#x27;Non, aucune fonction ne convient&#x27;],`La continuité est la structure que les morphismes de Top doivent respecter.`),
             Q(&#x27;o11&#x27;,3,&#x27;Une fonction entre deux groupes abéliens est-elle toujours un morphisme de Ab ?&#x27;, &#x27;Non, elle doit préserver l’addition&#x27;,[&#x27;Oui, automatiquement&#x27;,&#x27;Seulement si elle est continue&#x27;,&#x27;Seulement si elle est injective&#x27;,&#x27;Non, Ab ne contient aucune fonction&#x27;],`Un morphisme de Ab est un homomorphisme : il préserve l’opération.`),
             Q(&#x27;o12&#x27;,3,`Si ${f} ∈ Hom𝒞(${A},${B}), que sait-on nécessairement ?`,`${f} : ${A} → ${B}`,[`${f} : ${B} → ${A}`,`${f} est une identité`,`${A} = ${B}`,`${f} est bijectif`],`L’appartenance au Hom fixe exactement la source et le but.`),
@@ -1191,7 +1339,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;c10&#x27;,3,&#x27;La composée de deux homomorphismes de groupes abéliens est…&#x27;,&#x27;un homomorphisme&#x27;,[&#x27;une relation sans structure&#x27;,&#x27;toujours l’identité&#x27;,&#x27;forcément nulle&#x27;,&#x27;une application discontinue interdite&#x27;],`La préservation de l’addition se transmet à la composée.`),
             Q(&#x27;c11&#x27;,3,&#x27;Pourquoi g ∘ f et f ∘ g ne sont-ils pas interchangeables ?&#x27;, &#x27;L’ordre change et l’une des expressions peut être mal typée&#x27;,[&#x27;La composition est toujours commutative&#x27;,&#x27;Les noms des flèches l’interdisent&#x27;,&#x27;Seules les identités se composent&#x27;,&#x27;Les objets n’ont pas de type&#x27;],`La composition est orientée et dépend des raccords source-but.`),
             Q(&#x27;c12&#x27;,3,`Si ${f}:${A}→${B} et ${g}:${B}→${A}, quelles expressions sont bien typées ?`,`Les deux : ${g}∘${f} et ${f}∘${g}`,[`Seulement ${g}∘${f}`,`Seulement ${f}∘${g}`,&#x27;Aucune&#x27;,`${f}+${g} seulement`],`Les types se raccordent dans les deux sens, mais les résultats ont des types différents.`),
-            Q(&#x27;c13&#x27;,4,&#x27;Avec f(x)=x+1 et g(x)=2x, g ∘ f est-elle égale à f ∘ g ?&#x27;, &#x27;Non : 2x+2 ≠ 2x+1&#x27;,[&#x27;Oui par associativité&#x27;,&#x27;Oui car ce sont des fonctions&#x27;,&#x27;Oui seulement sur tous les entiers&#x27;,&#x27;Elles ne sont jamais définies&#x27;],`La composition n’est généralement pas commutative.`),
+            Q(&#x27;c13&#x27;,4,&#x27;Avec f(x)=x+1 et g(x)=2x, g ∘ f est-elle égale à f ∘ g ?&#x27;, &#x27;Non, car 2x+2 ≠ 2x+1&#x27;,[&#x27;Oui, par associativité&#x27;,&#x27;Oui, car ce sont des fonctions&#x27;,&#x27;Oui, seulement sur tous les entiers&#x27;,&#x27;Elles ne sont jamais définies&#x27;],`La composition n’est généralement pas commutative.`),
             Q(&#x27;c14&#x27;,4,`Si ${g} ∘ ${f} = ${h}, que représente ${h} ?`,&#x27;Le trajet en deux étapes condensé en une flèche&#x27;,[&#x27;La source commune seulement&#x27;,&#x27;Une identité nécessairement&#x27;,&#x27;Le trajet dans l’ordre inverse&#x27;,&#x27;Un nouvel objet&#x27;],`Une composition produit un morphisme unique du départ à l’arrivée.`),
             Q(&#x27;c15&#x27;,4,&#x27;Quelle propriété garantit que la composition reste dans Top ?&#x27;, &#x27;La composée de fonctions continues est continue&#x27;,[&#x27;Toute fonction est continue&#x27;,&#x27;Les objets sont des ensembles finis&#x27;,&#x27;Les identités sont surjectives&#x27;,&#x27;Top n’a pas de composition&#x27;],`La stabilité par composition est un axiome réalisé concrètement par la continuité.`),
             Q(&#x27;c16&#x27;,4,`Si ${f}:${A}→${B}, ${g}:${B}→${C} et ${h}:${D}→${A}, quelle chaîne est bien typée ?`,`${g} ∘ ${f} ∘ ${h}`,[`${h} ∘ ${g} ∘ ${f}`,`${f} ∘ ${g} ∘ ${h}`,`${g} ∘ ${h} ∘ ${f}`,`${f} ∘ ${h} ∘ ${g}`],`On part de ${D}, puis ${h}, ${f} et enfin ${g}.`),
@@ -1219,7 +1367,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;i16&#x27;,4,&#x27;Pourquoi parle-t-on de trajet de longueur nulle ?&#x27;, &#x27;L’identité reste sur le même objet sans transformation&#x27;,[&#x27;Elle supprime l’objet&#x27;,&#x27;Elle inverse toutes les flèches&#x27;,&#x27;Elle n’a ni source ni but&#x27;,&#x27;Elle est toujours le morphisme nul&#x27;],`L’identité formalise le fait de ne pas se déplacer.`),
             Q(&#x27;i17&#x27;,5,`Si ${f}:${A}→${B} et ${g}:${B}→${A} vérifient ${g}∘${f}=id_${A} et ${f}∘${g}=id_${B}, alors…`,`${f} et ${g} sont inverses`,[`${f}=${g} nécessairement`,`${A}=${B} nécessairement`,`${f} est une identité`,`${g} n’est pas composable`],`Ces deux égalités définissent un isomorphisme.`),
             Q(&#x27;i18&#x27;,5,&#x27;Dans Ens, quelle fonction est l’identité de {0,1} ?&#x27;, &#x27;0↦0 et 1↦1&#x27;,[&#x27;0↦1 et 1↦0&#x27;,&#x27;0↦0 et 1↦0&#x27;,&#x27;0↦1 et 1↦1&#x27;,&#x27;la fonction vide&#x27;],`Chaque élément doit être envoyé sur lui-même.`),
-            Q(&#x27;i19&#x27;,5,&#x27;Un morphisme e:A→A vérifiant seulement e∘e=e est-il forcément l’identité ?&#x27;, &#x27;Non, il peut être seulement idempotent&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui dans toute catégorie concrète&#x27;,&#x27;Non, car aucune identité n’existe&#x27;,&#x27;Oui s’il porte le nom e&#x27;],`L’idempotence est plus faible que les deux lois d’unité universelles.`),
+            Q(&#x27;i19&#x27;,5,&#x27;Un morphisme e:A→A vérifiant seulement e∘e=e est-il forcément l’identité ?&#x27;, &#x27;Non, il peut être seulement idempotent&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, dans toute catégorie concrète&#x27;,&#x27;Non, car aucune identité n’existe&#x27;,&#x27;Oui, s’il porte le nom e&#x27;],`L’idempotence est plus faible que les deux lois d’unité universelles.`),
             Q(&#x27;i20&#x27;,5,`Quelle expression est égale à ${g}∘${f} pour ${f}:${A}→${B}, ${g}:${B}→${C} ?`,`id_${C} ∘ ${g} ∘ ${f} ∘ id_${A}`,[`id_${A} ∘ ${g} ∘ ${f}`,`${g} ∘ id_${A} ∘ ${f}`,`${f} ∘ ${g}`,`id_${B}`],`Les identités placées aux extrémités respectent les types et sont neutres.`)
           ],
           [
@@ -1229,7 +1377,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;a4&#x27;,1,`Avec ${A}→${B}→${C}→${D}, les deux parenthésisations ont quel type ?`,`${A} → ${D}`,[`${D} → ${A}`,`${A} → ${C}`,`${B} → ${D}`,`${B} → ${C}`],`Elles représentent le même trajet complet.`),
             Q(&#x27;a5&#x27;,2,&#x27;Quelle égalité est de la commutativité, pas de l’associativité ?&#x27;, &#x27;g ∘ f = f ∘ g&#x27;,[&#x27;h ∘ (g ∘ f) = (h ∘ g) ∘ f&#x27;,&#x27;f ∘ id = f&#x27;,&#x27;id ∘ f = f&#x27;,&#x27;F(g∘f)=F(g)∘F(f)&#x27;],`La commutativité échange l’ordre des facteurs.`),
             Q(&#x27;a6&#x27;,2,&#x27;Pour des fonctions, pourquoi la composition est-elle associative ?&#x27;, &#x27;Les deux côtés envoient x sur h(g(f(x)))&#x27;,[&#x27;Parce que toutes les fonctions commutent&#x27;,&#x27;Parce que f=g=h&#x27;,&#x27;Parce que les domaines sont ignorés&#x27;,&#x27;Parce qu’une fonction est un objet&#x27;],`L’évaluation directe donne la même valeur des deux côtés.`),
-            Q(&#x27;a7&#x27;,2,&#x27;Ajouter 1 puis doubler commute-t-il avec doubler puis ajouter 1 ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui par associativité&#x27;,&#x27;Oui sur tout entier&#x27;,&#x27;Seulement parce que ce sont des fonctions&#x27;,&#x27;Les deux valent x+3&#x27;],`Les résultats 2x+2 et 2x+1 diffèrent.`),
+            Q(&#x27;a7&#x27;,2,&#x27;Ajouter 1 puis doubler commute-t-il avec doubler puis ajouter 1 ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui, par associativité&#x27;,&#x27;Oui, sur tout entier&#x27;,&#x27;Seulement parce que ce sont des fonctions&#x27;,&#x27;Les deux valent x+3&#x27;],`Les résultats 2x+2 et 2x+1 diffèrent.`),
             Q(&#x27;a8&#x27;,2,`Quelle sous-composition peut être calculée d’abord dans ${h}∘${g}∘${f} ?`,`Au choix ${g}∘${f} ou ${h}∘${g}`,[`${h}∘${f} seulement`,&#x27;Aucune&#x27;,&#x27;Les trois dans l’ordre inverse&#x27;,`${f}∘${h}`],`L’associativité autorise les deux groupements adjacents.`),
             Q(&#x27;a9&#x27;,3,&#x27;Une catégorie à un objet correspond à quelle structure ?&#x27;, &#x27;Un monoïde&#x27;,[&#x27;Un corps nécessairement&#x27;,&#x27;Un espace topologique&#x27;,&#x27;Un ensemble sans loi&#x27;,&#x27;Une relation d’ordre seulement&#x27;],`Les morphismes forment un monoïde sous la composition.`),
             Q(&#x27;a10&#x27;,3,&#x27;Dans la catégorie à un objet associée à (ℕ,+), la composition est…&#x27;,&#x27;l’addition&#x27;,[&#x27;la multiplication seulement&#x27;,&#x27;l’ordre ≤&#x27;,&#x27;la soustraction&#x27;,&#x27;une fonction continue&#x27;],`La loi associative du monoïde joue le rôle de composition.`),
@@ -1238,7 +1386,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;a13&#x27;,4,&#x27;Combien de résultats distincts donnent toutes les parenthésisations d’une chaîne composable ?&#x27;, &#x27;Un seul&#x27;,[&#x27;Deux&#x27;,&#x27;Autant que de parenthésisations&#x27;,&#x27;Aucun&#x27;,&#x27;Cela dépend des noms&#x27;],`C’est précisément la portée de l’axiome d’associativité.`),
             Q(&#x27;a14&#x27;,4,`Laquelle conserve l’ordre ${f}, puis ${g}, puis ${h} ?`,`${h} ∘ (${g} ∘ ${f})`,[`${f} ∘ (${g} ∘ ${h})`,`${g} ∘ (${f} ∘ ${h})`,`${f} ∘ (${h} ∘ ${g})`,`${h} ∘ (${f} ∘ ${g})`],`La lecture se fait de droite à gauche.`),
             Q(&#x27;a15&#x27;,4,&#x27;Pourquoi f ∘ g peut-elle être non définie alors que g ∘ f l’est ?&#x27;, &#x27;Les raccords source-but dépendent de l’ordre&#x27;,[&#x27;L’associativité échoue&#x27;,&#x27;Les identités manquent&#x27;,&#x27;Les objets commutent&#x27;,&#x27;Les noms sont trop courts&#x27;],`Le type intermédiaire change lorsque l’ordre est inversé.`),
-            Q(&#x27;a16&#x27;,4,&#x27;Dans un monoïde non commutatif, la catégorie à un objet est-elle valide ?&#x27;, &#x27;Oui, seule l’associativité est exigée&#x27;,[&#x27;Non, la composition doit commuter&#x27;,&#x27;Non, il faut plusieurs objets&#x27;,&#x27;Oui seulement sans identité&#x27;,&#x27;Non, un monoïde est toujours commutatif&#x27;],`Une catégorie n’exige jamais la commutativité générale.`),
+            Q(&#x27;a16&#x27;,4,&#x27;Dans un monoïde non commutatif, la catégorie à un objet est-elle valide ?&#x27;, &#x27;Oui, seule l’associativité est exigée&#x27;,[&#x27;Non, la composition doit commuter&#x27;,&#x27;Non, il faut plusieurs objets&#x27;,&#x27;Oui, seulement sans identité&#x27;,&#x27;Non, un monoïde est toujours commutatif&#x27;],`Une catégorie n’exige jamais la commutativité générale.`),
             Q(&#x27;a17&#x27;,5,&#x27;Que généralise une catégorie à un objet ?&#x27;, &#x27;La notion de monoïde&#x27;,[&#x27;Uniquement les espaces métriques&#x27;,&#x27;Uniquement les groupes abéliens&#x27;,&#x27;La notion de nombre premier&#x27;,&#x27;Les ensembles vides&#x27;],`Les multiples objets étendent la loi partiellement définie d’un monoïde.`),
             Q(&#x27;a18&#x27;,5,&#x27;Si chaque morphisme d’une catégorie à un objet est inversible, le monoïde est…&#x27;,&#x27;un groupe&#x27;,[&#x27;un anneau&#x27;,&#x27;un ensemble ordonné&#x27;,&#x27;un espace compact&#x27;,&#x27;nécessairement abélien&#x27;],`Un monoïde dont tous les éléments sont inversibles est un groupe.`),
             Q(&#x27;a19&#x27;,5,&#x27;Quelle propriété n’est pas impliquée par l’associativité ?&#x27;, &#x27;La commutativité&#x27;,[&#x27;La cohérence des parenthèses&#x27;,&#x27;L’égalité des regroupements&#x27;,&#x27;La possibilité d’écrire une chaîne sans parenthèses&#x27;,&#x27;La stabilité du résultat sous regroupement&#x27;],`L’ordre des morphismes reste essentiel.`),
@@ -1256,13 +1404,13 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;d9&#x27;,3,&#x27;Pourquoi les diagrammes aident-ils à contrôler les types ?&#x27;, &#x27;Les objets intermédiaires rendent visibles les raccords&#x27;,[&#x27;Ils suppriment les sources&#x27;,&#x27;Ils rendent tout commutatif&#x27;,&#x27;Ils imposent des bijections&#x27;,&#x27;Ils remplacent les identités&#x27;],`Chaque sommet montre où une flèche arrive et d’où la suivante repart.`),
             Q(&#x27;d10&#x27;,3,&#x27;La naturalité d’une transformation sera exprimée par…&#x27;,&#x27;un carré commutatif&#x27;,[&#x27;un objet isolé&#x27;,&#x27;une suite de nombres&#x27;,&#x27;un triangle non orienté&#x27;,&#x27;une égalité sans types&#x27;],`Le carré compare avancer puis transformer à transformer puis avancer.`),
             Q(&#x27;d11&#x27;,3,&#x27;Les lois d’identité peuvent-elles se dessiner par des diagrammes commutatifs ?&#x27;, &#x27;Oui&#x27;,[&#x27;Non&#x27;,&#x27;Seulement dans Ens&#x27;,&#x27;Seulement sans composition&#x27;,&#x27;Uniquement pour les groupes&#x27;],`Les détours par l’identité doivent égaler la flèche directe.`),
-            Q(&#x27;d12&#x27;,3,&#x27;Si deux chemins ont même départ mais des arrivées différentes, peut-on demander leur égalité ?&#x27;, &#x27;Non, leurs types diffèrent&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui s’ils ont même longueur&#x27;,&#x27;Seulement dans Ab&#x27;,&#x27;Oui si le dessin est symétrique&#x27;],`Deux morphismes égaux doivent avoir le même codomaine.`),
-            Q(&#x27;d13&#x27;,4,&#x27;Dans Ens, tester h(x)=g(f(x)) pour quelques x suffit-il en général ?&#x27;, &#x27;Non, il faut tous les x&#x27;,[&#x27;Oui, deux suffisent toujours&#x27;,&#x27;Oui, un seul suffit&#x27;,&#x27;Oui si les ensembles sont grands&#x27;,&#x27;Aucun test n’est possible&#x27;],`Une égalité de fonctions est universelle sur le domaine.`),
+            Q(&#x27;d12&#x27;,3,&#x27;Si deux chemins ont même départ mais des arrivées différentes, peut-on demander leur égalité ?&#x27;, &#x27;Non, leurs types diffèrent&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, s’ils ont même longueur&#x27;,&#x27;Seulement dans Ab&#x27;,&#x27;Oui, si le dessin est symétrique&#x27;],`Deux morphismes égaux doivent avoir le même codomaine.`),
+            Q(&#x27;d13&#x27;,4,&#x27;Dans Ens, tester h(x)=g(f(x)) pour quelques x suffit-il en général ?&#x27;, &#x27;Non, il faut tous les x&#x27;,[&#x27;Oui, deux suffisent toujours&#x27;,&#x27;Oui, un seul suffit&#x27;,&#x27;Oui, si les ensembles sont grands&#x27;,&#x27;Aucun test n’est possible&#x27;],`Une égalité de fonctions est universelle sur le domaine.`),
             Q(&#x27;d14&#x27;,4,&#x27;Si trois chemins parallèles relient A à D dans un diagramme commutatif…&#x27;,&#x27;leurs trois composées sont égales&#x27;,[&#x27;seuls deux sont égaux&#x27;,&#x27;leurs longueurs sont égales&#x27;,&#x27;ils utilisent les mêmes flèches&#x27;,&#x27;ils sont tous des identités&#x27;],`La commutativité compare tous les chemins de mêmes extrémités.`),
             Q(&#x27;d15&#x27;,4,&#x27;Quel énoncé est faux à propos d’un diagramme commutatif ?&#x27;, &#x27;Tous les objets doivent être identiques&#x27;,[&#x27;Les chemins comparés ont mêmes extrémités&#x27;,&#x27;Les compositions parallèles sont égales&#x27;,&#x27;Le dessin peut condenser des équations&#x27;,&#x27;Les flèches restent orientées&#x27;],`Des objets distincts sont précisément ce que les diagrammes relient.`),
             Q(&#x27;d16&#x27;,4,&#x27;Une propriété universelle est souvent formulée avec des diagrammes parce qu’ils…&#x27;,&#x27;expriment existence, unicité et factorisation de flèches&#x27;,[&#x27;font disparaître les morphismes&#x27;,&#x27;imposent la commutativité de toute catégorie&#x27;,&#x27;remplacent toute démonstration&#x27;,&#x27;ne montrent que des ensembles&#x27;],`Les factorisations et leur unicité se lisent naturellement comme chemins.`),
             Q(&#x27;d17&#x27;,5,&#x27;Dans un carré A→B, A↓C, B↓D, C→D, quelle égalité exprime la commutativité ?&#x27;, &#x27;droite puis bas = bas puis droite&#x27;,[&#x27;haut puis gauche = identité&#x27;,&#x27;les quatre flèches sont égales&#x27;,&#x27;A=D&#x27;,&#x27;chaque flèche est inversible&#x27;],`Les deux routes de A à D doivent coïncider.`),
-            Q(&#x27;d18&#x27;,5,&#x27;Une égalité entre chemins dans une catégorie abstraite peut-elle être vérifiée élément par élément ?&#x27;, &#x27;Pas en général : les objets n’ont pas forcément des éléments accessibles&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Non, jamais même dans Ens&#x27;,&#x27;Seulement si les chemins sont courts&#x27;,&#x27;Oui si le diagramme est triangulaire&#x27;],`Le raisonnement par éléments est spécifique aux cadres concrets adaptés.`),
+            Q(&#x27;d18&#x27;,5,&#x27;Une égalité entre chemins dans une catégorie abstraite peut-elle être vérifiée élément par élément ?&#x27;, &#x27;Pas en général : les objets n’ont pas forcément des éléments accessibles&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Non, jamais même dans Ens&#x27;,&#x27;Seulement si les chemins sont courts&#x27;,&#x27;Oui, si le diagramme est triangulaire&#x27;],`Le raisonnement par éléments est spécifique aux cadres concrets adaptés.`),
             Q(&#x27;d19&#x27;,5,&#x27;Appliquer un foncteur à un diagramme commutatif donne…&#x27;,&#x27;un diagramme commutatif&#x27;,[&#x27;un diagramme sans flèches&#x27;,&#x27;toujours un triangle&#x27;,&#x27;un diagramme forcément non commutatif&#x27;,&#x27;des objets non typés&#x27;],`Le foncteur préserve composition et égalités de morphismes.`),
             Q(&#x27;d20&#x27;,5,&#x27;Si le chemin direct h et le chemin g ∘ f diffèrent sur un seul élément dans Ens…&#x27;,&#x27;le triangle ne commute pas&#x27;,[&#x27;le triangle commute presque donc commute&#x27;,&#x27;il commute si les ensembles sont finis&#x27;,&#x27;h est une identité&#x27;,&#x27;g ∘ f est mal typé&#x27;],`Une seule différence suffit à réfuter l’égalité de fonctions.`)
           ],
@@ -1273,19 +1421,19 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;f4&#x27;,1,&#x27;Que doit valoir F(g ∘ f) ?&#x27;, &#x27;F(g) ∘ F(f)&#x27;,[&#x27;F(f) ∘ F(g)&#x27;,&#x27;F(g)+F(f)&#x27;,&#x27;F(g)&#x27;,&#x27;id&#x27;],`Les compositions sont préservées dans le même ordre.`),
             Q(&#x27;f5&#x27;,2,&#x27;Que fait le foncteur d’oubli U:Ab→Ens ?&#x27;, &#x27;Il garde l’ensemble sous-jacent et oublie l’addition&#x27;,[&#x27;Il transforme tout en ensemble vide&#x27;,&#x27;Il ajoute une topologie&#x27;,&#x27;Il inverse les homomorphismes&#x27;,&#x27;Il ne garde que les identités&#x27;],`U conserve les éléments et fonctions, mais oublie la structure de groupe.`),
             Q(&#x27;f6&#x27;,2,&#x27;Sous U:Ab→Ens, un homomorphisme devient…&#x27;,&#x27;sa fonction sous-jacente&#x27;,[&#x27;un objet terminal&#x27;,&#x27;une identité systématique&#x27;,&#x27;une relation non fonctionnelle&#x27;,&#x27;un espace topologique&#x27;],`Le même processus est vu sans la structure algébrique.`),
-            Q(&#x27;f7&#x27;,2,&#x27;Un foncteur peut-il inverser la direction de chaque flèche tout en étant covariant ordinaire ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui, par définition&#x27;,&#x27;Toujours dans Ens&#x27;,&#x27;Seulement s’il est constant&#x27;,&#x27;Oui sans changer les types&#x27;],`Un foncteur covariant préserve la direction ; un foncteur contravariant relève d’une autre notion.`),
+            Q(&#x27;f7&#x27;,2,&#x27;Un foncteur peut-il inverser la direction de chaque flèche tout en étant covariant ordinaire ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui, par définition&#x27;,&#x27;Toujours dans Ens&#x27;,&#x27;Seulement s’il est constant&#x27;,&#x27;Oui, sans changer les types&#x27;],`Un foncteur covariant préserve la direction ; un foncteur contravariant relève d’une autre notion.`),
             Q(&#x27;f8&#x27;,2,&#x27;Un diagramme commutatif reste-t-il commutatif après F ?&#x27;, &#x27;Oui&#x27;,[&#x27;Non, jamais&#x27;,&#x27;Seulement si F est plein&#x27;,&#x27;Seulement dans Top&#x27;,&#x27;Seulement pour les triangles&#x27;],`F préserve les compositions et donc les égalités de chemins.`),
             Q(&#x27;f9&#x27;,3,&#x27;Un foncteur constant envoie les morphismes sur…&#x27;,&#x27;l’identité de l’objet choisi&#x27;,[&#x27;des morphismes aléatoires&#x27;,&#x27;eux-mêmes nécessairement&#x27;,&#x27;des inverses&#x27;,&#x27;aucune flèche&#x27;],`Pour préserver types et identités, toutes les flèches deviennent cette identité.`),
             Q(&#x27;f10&#x27;,3,&#x27;Un foncteur fidèle…&#x27;,&#x27;ne confond pas deux morphismes distincts entre mêmes objets&#x27;,[&#x27;atteint tous les objets&#x27;,&#x27;est toujours une équivalence&#x27;,&#x27;envoie tout sur une identité&#x27;,&#x27;oublie les sources&#x27;],`La fidélité est l’injectivité sur chaque ensemble Hom.`),
             Q(&#x27;f11&#x27;,3,&#x27;Un foncteur plein…&#x27;,&#x27;atteint tous les morphismes entre les images de deux objets&#x27;,[&#x27;est injectif sur les objets&#x27;,&#x27;est toujours fidèle&#x27;,&#x27;ne préserve pas la composition&#x27;,&#x27;est forcément constant&#x27;],`La plénitude est la surjectivité sur chaque application entre Hom.`),
             Q(&#x27;f12&#x27;,3,&#x27;Plein et fidèle portent sur…&#x27;,&#x27;les applications entre ensembles de morphismes Hom&#x27;,[&#x27;la taille des objets seulement&#x27;,&#x27;les noms des catégories&#x27;,&#x27;les topologies uniquement&#x27;,&#x27;le nombre de foncteurs&#x27;],`Ces propriétés mesurent ce que F fait aux flèches entre chaque paire d’objets.`),
-            Q(&#x27;f13&#x27;,4,&#x27;Un foncteur fidèle peut-il identifier deux objets distincts ?&#x27;, &#x27;Oui, la fidélité concerne les morphismes&#x27;,[&#x27;Non, jamais&#x27;,&#x27;Oui seulement sans identités&#x27;,&#x27;Non, par définition de plein&#x27;,&#x27;Aucun foncteur n’agit sur les objets&#x27;],`La fidélité n’impose pas l’injectivité sur les objets.`),
+            Q(&#x27;f13&#x27;,4,&#x27;Un foncteur fidèle peut-il identifier deux objets distincts ?&#x27;, &#x27;Oui, la fidélité concerne les morphismes&#x27;,[&#x27;Non, jamais&#x27;,&#x27;Oui, seulement sans identités&#x27;,&#x27;Non, par définition de plein&#x27;,&#x27;Aucun foncteur n’agit sur les objets&#x27;],`La fidélité n’impose pas l’injectivité sur les objets.`),
             Q(&#x27;f14&#x27;,4,&#x27;Un foncteur plein est-il forcément fidèle ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui&#x27;,&#x27;Seulement dans Ens&#x27;,&#x27;Seulement s’il est constant&#x27;,&#x27;Plein signifie exactement fidèle&#x27;],`Surjectivité et injectivité sur les Hom sont indépendantes.`),
             Q(&#x27;f15&#x27;,4,&#x27;Pourquoi F(idₐ)=id_F(A) est-il nécessaire ?&#x27;, &#x27;Pour que le trajet neutre reste neutre après transport&#x27;,[&#x27;Pour rendre F surjectif&#x27;,&#x27;Pour inverser les flèches&#x27;,&#x27;Pour ajouter des objets&#x27;,&#x27;Pour rendre 𝒞 concrète&#x27;],`Le transport doit respecter toute la structure catégorique.`),
-            Q(&#x27;f16&#x27;,4,&#x27;Le foncteur d’oubli U:Ab→Ens est-il fidèle ?&#x27;, &#x27;Oui, deux homomorphismes différents sont des fonctions différentes&#x27;,[&#x27;Non, il confond tous les morphismes&#x27;,&#x27;Non, il est constant&#x27;,&#x27;Oui parce qu’il est plein&#x27;,&#x27;Il n’agit pas sur les morphismes&#x27;],`Oublier l’addition ne confond pas les valeurs des fonctions.`),
-            Q(&#x27;f17&#x27;,5,&#x27;Le foncteur U:Ab→Ens est-il plein ?&#x27;, &#x27;Non, toute fonction sous-jacente ne préserve pas l’addition&#x27;,[&#x27;Oui, toute fonction est un homomorphisme&#x27;,&#x27;Oui parce qu’il est fidèle&#x27;,&#x27;Non, aucun morphisme ne survit&#x27;,&#x27;Seulement sur les identités&#x27;],`Certaines fonctions entre ensembles sous-jacents ne viennent d’aucun homomorphisme.`),
+            Q(&#x27;f16&#x27;,4,&#x27;Le foncteur d’oubli U:Ab→Ens est-il fidèle ?&#x27;, &#x27;Oui, deux homomorphismes différents sont des fonctions différentes&#x27;,[&#x27;Non, il confond tous les morphismes&#x27;,&#x27;Non, il est constant&#x27;,&#x27;Oui, parce qu’il est plein&#x27;,&#x27;Il n’agit pas sur les morphismes&#x27;],`Oublier l’addition ne confond pas les valeurs des fonctions.`),
+            Q(&#x27;f17&#x27;,5,&#x27;Le foncteur U:Ab→Ens est-il plein ?&#x27;, &#x27;Non, toute fonction sous-jacente ne préserve pas l’addition&#x27;,[&#x27;Oui, toute fonction est un homomorphisme&#x27;,&#x27;Oui, parce qu’il est fidèle&#x27;,&#x27;Non, aucun morphisme ne survit&#x27;,&#x27;Seulement sur les identités&#x27;],`Certaines fonctions entre ensembles sous-jacents ne viennent d’aucun homomorphisme.`),
             Q(&#x27;f18&#x27;,5,&#x27;Si F est plein et fidèle, que fait-il sur chaque Hom𝒞(A,B) ?&#x27;, &#x27;Il induit une bijection vers Hom𝒟(F(A),F(B))&#x27;,[&#x27;Il l’envoie sur un objet&#x27;,&#x27;Il le rend vide&#x27;,&#x27;Il inverse toutes les flèches&#x27;,&#x27;Il impose A=B&#x27;],`Plein donne la surjectivité, fidèle l’injectivité.`),
-            Q(&#x27;f19&#x27;,5,&#x27;Préserver la composition suffit-il sans préserver explicitement les identités ?&#x27;, &#x27;Non dans la définition générale d’un foncteur&#x27;,[&#x27;Oui toujours&#x27;,&#x27;Oui si 𝒞 a plusieurs objets&#x27;,&#x27;Non car la composition est interdite&#x27;,&#x27;Oui uniquement pour un foncteur constant&#x27;],`Les deux lois font partie de la définition générale.`),
+            Q(&#x27;f19&#x27;,5,&#x27;Préserver la composition suffit-il sans préserver explicitement les identités ?&#x27;, &#x27;Non, dans la définition générale d’un foncteur&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, si 𝒞 a plusieurs objets&#x27;,&#x27;Non, car la composition est interdite&#x27;,&#x27;Oui, uniquement pour un foncteur constant&#x27;],`Les deux lois font partie de la définition générale.`),
             Q(&#x27;f20&#x27;,5,`Si ${g}∘${f}=${h}, que garantit F ?`,`F(${g})∘F(${f})=F(${h})`,[`F(${f})∘F(${g})=F(${h})`,`F(${g})+F(${f})=${h}`,`F(${h})=id`,`F(${f})=F(${g})`],`F transporte l’égalité et la composition du diagramme.`)
           ],
           [
@@ -1294,7 +1442,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;n3&#x27;,1,`Quel est le type de η_${A} ?`,`F(${A}) → G(${A})`,[`G(${A}) → F(${A})`,`${A} → F(${A})`,`F(${A}) → ${A}`,`F → G`],`La composante relie les valeurs des deux foncteurs au même objet.`),
             Q(&#x27;n4&#x27;,1,&#x27;Quel diagramme exprime la naturalité ?&#x27;, &#x27;Un carré commutatif&#x27;,[&#x27;Un objet isolé&#x27;,&#x27;Une boucle sans flèche&#x27;,&#x27;Un triangle sans composition&#x27;,&#x27;Une liste de nombres&#x27;],`Chaque morphisme de la source produit un carré de naturalité.`),
             Q(&#x27;n5&#x27;,2,`Pour ${f}:${A}→${B}, quelle est l’équation de naturalité ?`,`G(${f}) ∘ η_${A} = η_${B} ∘ F(${f})`,[`F(${f}) ∘ η_${A} = η_${B} ∘ G(${f})`,`η_${A} ∘ G(${f}) = F(${f}) ∘ η_${B}`,`G(${f}) = F(${f})`,`η_${A}=η_${B}`],`Descendre puis avancer égale avancer puis descendre.`),
-            Q(&#x27;n6&#x27;,2,&#x27;Une famille de flèches F(A)→G(A) est-elle automatiquement naturelle ?&#x27;, &#x27;Non, elle doit satisfaire tous les carrés&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui si elle a un nom grec&#x27;,&#x27;Seulement dans Ens, oui automatiquement&#x27;,&#x27;Non, aucune famille ne peut l’être&#x27;],`La compatibilité avec chaque morphisme est une condition supplémentaire.`),
+            Q(&#x27;n6&#x27;,2,&#x27;Une famille de flèches F(A)→G(A) est-elle automatiquement naturelle ?&#x27;, &#x27;Non, elle doit satisfaire tous les carrés&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, si elle a un nom grec&#x27;,&#x27;Seulement dans Ens, oui automatiquement&#x27;,&#x27;Non, aucune famille ne peut l’être&#x27;],`La compatibilité avec chaque morphisme est une condition supplémentaire.`),
             Q(&#x27;n7&#x27;,2,&#x27;Les identités id_F(A) forment-elles une transformation naturelle F⇒F ?&#x27;, &#x27;Oui&#x27;,[&#x27;Non&#x27;,&#x27;Seulement si F est constant&#x27;,&#x27;Seulement dans Top&#x27;,&#x27;Seulement si 𝒞 est vide&#x27;],`Les lois d’identité et de fonctorialité font commuter les carrés.`),
             Q(&#x27;n8&#x27;,2,&#x27;La naturalité doit être vérifiée pour…&#x27;,&#x27;chaque morphisme de 𝒞&#x27;,[&#x27;un seul objet&#x27;,&#x27;les identités seulement&#x27;,&#x27;les morphismes de 𝒟 seulement&#x27;,&#x27;les objets terminaux uniquement&#x27;],`Elle exprime une compatibilité uniforme sur toute la catégorie source.`),
             Q(&#x27;n9&#x27;,3,&#x27;Comment compose-t-on verticalement η:F⇒G et θ:G⇒H ?&#x27;, &#x27;Composante par composante : (θ∘η)ₐ=θₐ∘ηₐ&#x27;,[&#x27;En inversant chaque composante&#x27;,&#x27;En composant les objets&#x27;,&#x27;On ne peut pas les composer&#x27;,&#x27;En additionnant les indices&#x27;],`Les types F(A)→G(A)→H(A) se raccordent.`),
@@ -1307,29 +1455,29 @@ html&gt;body{padding:0}&lt;/style&gt;
             Q(&#x27;n16&#x27;,4,&#x27;Si η et θ sont naturelles et composables, leur composée verticale est-elle naturelle ?&#x27;, &#x27;Oui&#x27;,[&#x27;Non&#x27;,&#x27;Seulement dans Ens&#x27;,&#x27;Seulement si elles sont identités&#x27;,&#x27;Seulement si F=H&#x27;],`Les carrés se recollent et la composition dans 𝒟 est associative.`),
             Q(&#x27;n17&#x27;,5,&#x27;Dans l’équation G(f)∘ηₐ=ηᵦ∘F(f), quel côté signifie transformer puis avancer ?&#x27;, &#x27;G(f) ∘ ηₐ&#x27;,[&#x27;ηᵦ ∘ F(f)&#x27;,&#x27;F(f) ∘ ηᵦ&#x27;,&#x27;ηₐ ∘ G(f)&#x27;,&#x27;F(f) seulement&#x27;],`ηₐ fait descendre de F(A) à G(A), puis G(f) avance.`),
             Q(&#x27;n18&#x27;,5,&#x27;Quel type commun ont les deux côtés du carré de naturalité ?&#x27;, &#x27;F(A) → G(B)&#x27;,[&#x27;G(A) → F(B)&#x27;,&#x27;F(B) → G(A)&#x27;,&#x27;A → B&#x27;,&#x27;F(A) → F(B)&#x27;],`Les deux chemins partent de F(A) et finissent en G(B).`),
-            Q(&#x27;n19&#x27;,5,&#x27;Une transformation naturelle peut-elle relier des foncteurs de sources différentes ?&#x27;, &#x27;Non dans la définition ordinaire : ils doivent avoir même source et même but&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Seulement si leurs noms concordent&#x27;,&#x27;Oui si toutes les composantes sont identités&#x27;,&#x27;Non, deux foncteurs ne peuvent jamais être comparés&#x27;],`F et G doivent être parallèles : 𝒞→𝒟.`),
+            Q(&#x27;n19&#x27;,5,&#x27;Une transformation naturelle peut-elle relier des foncteurs de sources différentes ?&#x27;, &#x27;Non, dans la définition ordinaire : ils doivent avoir même source et même but&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Seulement si leurs noms concordent&#x27;,&#x27;Oui, si toutes les composantes sont identités&#x27;,&#x27;Non, deux foncteurs ne peuvent jamais être comparés&#x27;],`F et G doivent être parallèles : 𝒞→𝒟.`),
             Q(&#x27;n20&#x27;,5,&#x27;L’inverse composante par composante d’un isomorphisme naturel est-il naturel ?&#x27;, &#x27;Oui&#x27;,[&#x27;Non&#x27;,&#x27;Seulement dans Ab&#x27;,&#x27;Seulement si les composantes sont identités&#x27;,&#x27;Aucun inverse n’existe&#x27;],`On inverse les carrés commutatifs pour obtenir la naturalité réciproque.`)
           ],
           [
-            Q(&#x27;j1&#x27;,1,&#x27;Que désigne Hom𝒞(A,B) ?&#x27;, &#x27;Les morphismes A→B dans 𝒞&#x27;,[&#x27;Les objets entre A et B&#x27;,&#x27;Les morphismes B→A&#x27;,&#x27;Les foncteurs 𝒞→Ens&#x27;,&#x27;Une unique flèche toujours&#x27;],`Hom précise la catégorie, la source et le but.`),
-            Q(&#x27;j2&#x27;,1,&#x27;Dans Ens, HomEns(X,Y) est…&#x27;,&#x27;l’ensemble des fonctions X→Y&#x27;,[&#x27;l’ensemble X∩Y&#x27;,&#x27;les bijections seulement&#x27;,&#x27;les parties de X&#x27;,&#x27;les fonctions Y→X&#x27;],`Les morphismes de Ens sont toutes les fonctions.`),
+            Q(&#x27;j1&#x27;,1,&#x27;Que désigne \\(\\operatorname{Hom}_{\\mathcal C}(A,B)\\) ?&#x27;, &#x27;Les morphismes \\(A\\to B\\) dans \\(\\mathcal C\\)&#x27;,[&#x27;Les objets situés entre A et B&#x27;,&#x27;Les morphismes \\(B\\to A\\)&#x27;,&#x27;Les foncteurs \\(\\mathcal C\\to\\mathbf{Ens}\\)&#x27;,&#x27;Une unique flèche, quel que soit A et B&#x27;],`Hom précise la catégorie, la source et le but.`),
+            Q(&#x27;j2&#x27;,1,&#x27;Dans Ens, que représente \\(\\operatorname{Hom}_{\\mathbf{Ens}}(X,Y)\\) ?&#x27;,&#x27;L’ensemble de toutes les fonctions \\(X\\to Y\\)&#x27;,[&#x27;L’ensemble des bijections \\(X\\to Y\\) seulement&#x27;,&#x27;L’ensemble des parties communes à X et Y&#x27;,&#x27;L’ensemble des fonctions \\(Y\\to X\\)&#x27;,&#x27;L’ensemble des injections \\(X\\to Y\\) seulement&#x27;],`Les morphismes de Ens sont toutes les fonctions.`),
             Q(&#x27;j3&#x27;,1,&#x27;Si X a 2 éléments et Y en a 3, combien y a-t-il de fonctions X→Y ?&#x27;, &#x27;9&#x27;,[&#x27;6&#x27;,&#x27;5&#x27;,&#x27;8&#x27;,&#x27;3&#x27;],`Chaque élément de X a 3 choix indépendants : 3²=9.`),
             Q(&#x27;j4&#x27;,1,&#x27;Dans Ab, HomAb(A,B) contient…&#x27;,&#x27;les homomorphismes A→B&#x27;,[&#x27;toutes les fonctions sans condition&#x27;,&#x27;les éléments de A&#x27;,&#x27;les sous-groupes de B&#x27;,&#x27;les espaces topologiques&#x27;],`L’indice Ab impose la préservation de l’addition.`),
-            Q(&#x27;j5&#x27;,2,&#x27;Pour F:𝒞→𝒟 et G:𝒟→𝒞, quelle formule définit F ⊣ G ?&#x27;, &#x27;Hom𝒟(F(A),B) ≅ Hom𝒞(A,G(B))&#x27;,[&#x27;Hom𝒞(F(A),B) ≅ Hom𝒟(A,G(B))&#x27;,&#x27;F∘G=id toujours&#x27;,&#x27;F(A)=G(A)&#x27;,&#x27;Hom𝒟(B,F(A)) ≅ Hom𝒞(G(B),A)&#x27;],`Les deux Hom comparent une flèche sortant de F(A) à une flèche entrant dans G(B).`),
+            Q(&#x27;j5&#x27;,2,&#x27;Pour \\(F\\colon\\mathcal C\\to\\mathcal D\\) et \\(G\\colon\\mathcal D\\to\\mathcal C\\), quelle formule définit \\(F\\dashv G\\) ?&#x27;, &#x27;\\(\\operatorname{Hom}_{\\mathcal D}(F(A),B)\\cong\\operatorname{Hom}_{\\mathcal C}(A,G(B))\\)&#x27;,[&#x27;\\(\\operatorname{Hom}_{\\mathcal C}(F(A),B)\\cong\\operatorname{Hom}_{\\mathcal D}(A,G(B))\\)&#x27;,&#x27;\\(F\\circ G=\\mathrm{id}\\) pour tous les objets&#x27;,&#x27;\\(F(A)=G(A)\\) pour tout A&#x27;,&#x27;\\(\\operatorname{Hom}_{\\mathcal D}(B,F(A))\\cong\\operatorname{Hom}_{\\mathcal C}(G(B),A)\\)&#x27;],`Les deux Hom comparent une flèche sortant de F(A) à une flèche entrant dans G(B).`),
             Q(&#x27;j6&#x27;,2,&#x27;Dans F ⊣ G, F est…&#x27;,&#x27;l’adjoint à gauche&#x27;,[&#x27;l’adjoint à droite&#x27;,&#x27;une transformation naturelle&#x27;,&#x27;une identité&#x27;,&#x27;un ensemble Hom&#x27;],`Le symbole place l’adjoint gauche à gauche de ⊣.`),
             Q(&#x27;j7&#x27;,2,&#x27;Dans F ⊣ G, G est…&#x27;,&#x27;l’adjoint à droite&#x27;,[&#x27;l’adjoint à gauche&#x27;,&#x27;un objet initial&#x27;,&#x27;une counité&#x27;,&#x27;un morphisme de 𝒞&#x27;],`G ramène les objets de 𝒟 vers 𝒞.`),
             Q(&#x27;j8&#x27;,2,&#x27;La correspondance des Hom doit être…&#x27;,&#x27;bijective et naturelle en A et B&#x27;,[&#x27;seulement injective&#x27;,&#x27;un simple choix sans cohérence&#x27;,&#x27;une égalité des objets A et B&#x27;,&#x27;valable pour un seul couple&#x27;],`La naturalité transforme une collection de bijections en véritable adjonction.`),
             Q(&#x27;j9&#x27;,3,&#x27;Quel foncteur est adjoint à gauche de U:Ab→Ens ?&#x27;, &#x27;Le groupe abélien libre ℤ[-]&#x27;,[&#x27;Le foncteur constant&#x27;,&#x27;U lui-même nécessairement&#x27;,&#x27;Le foncteur identité de Top&#x27;,&#x27;HomAb&#x27;],`Une fonction sur les générateurs s’étend en un homomorphisme unique.`),
             Q(&#x27;j10&#x27;,3,&#x27;Que dit HomAb(ℤ[X],A) ≅ HomEns(X,U(A)) ?&#x27;, &#x27;Choisir les images des générateurs détermine un homomorphisme unique&#x27;,[&#x27;Tout groupe abélien est libre&#x27;,&#x27;Toute fonction est un homomorphisme entre groupes donnés&#x27;,&#x27;X et A sont égaux&#x27;,&#x27;U est une équivalence&#x27;],`C’est la propriété universelle du groupe abélien libre.`),
             Q(&#x27;j11&#x27;,3,&#x27;Le foncteur espace discret Disc:Ens→Top est…&#x27;,&#x27;adjoint à gauche du foncteur d’oubli U:Top→Ens&#x27;,[&#x27;adjoint à droite seulement&#x27;,&#x27;une transformation naturelle&#x27;,&#x27;le foncteur produit&#x27;,&#x27;non fonctoriel&#x27;],`Toute fonction depuis un espace discret est continue.`),
-            Q(&#x27;j12&#x27;,3,&#x27;Une adjonction est-elle forcément une équivalence ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui si les catégories sont concrètes&#x27;,&#x27;Non, elle n’a aucun foncteur&#x27;,&#x27;Oui si elle possède une unité&#x27;],`Une équivalence est un cas beaucoup plus fort.`),
+            Q(&#x27;j12&#x27;,3,&#x27;Une adjonction est-elle forcément une équivalence ?&#x27;, &#x27;Non&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, si les catégories sont concrètes&#x27;,&#x27;Non, elle n’a aucun foncteur&#x27;,&#x27;Oui, si elle possède une unité&#x27;],`Une équivalence est un cas beaucoup plus fort.`),
             Q(&#x27;j13&#x27;,4,&#x27;Quel est le type de l’unité d’une adjonction F ⊣ G ?&#x27;, &#x27;η:id𝒞⇒G∘F&#x27;,[&#x27;η:F∘G⇒id𝒟&#x27;,&#x27;η:G⇒F&#x27;,&#x27;η:id𝒟⇒F∘G&#x27;,&#x27;η:F⇒G&#x27;],`L’unité part de chaque objet de la catégorie source de F vers G(F(A)).`),
             Q(&#x27;j14&#x27;,4,&#x27;Quel est le type de la counité ?&#x27;, &#x27;ε:F∘G⇒id𝒟&#x27;,[&#x27;ε:id𝒞⇒G∘F&#x27;,&#x27;ε:G⇒F&#x27;,&#x27;ε:id𝒟⇒G∘F&#x27;,&#x27;ε:F⇒G&#x27;],`La counité revient de F(G(B)) vers B dans 𝒟.`),
             Q(&#x27;j15&#x27;,4,&#x27;Pour le groupe libre, que fait l’unité en X ?&#x27;, &#x27;Elle envoie x sur le générateur [x] de ℤ[X]&#x27;,[&#x27;Elle additionne tous les éléments&#x27;,&#x27;Elle oublie X&#x27;,&#x27;Elle envoie tout sur 0&#x27;,&#x27;Elle choisit une topologie&#x27;],`L’unité insère les générateurs dans l’ensemble sous-jacent du groupe libre.`),
             Q(&#x27;j16&#x27;,4,&#x27;Si les produits existent, le foncteur diagonal Δ:𝒞→𝒞×𝒞 est adjoint à gauche de…&#x27;,&#x27;le foncteur produit ×:𝒞×𝒞→𝒞&#x27;,[&#x27;le foncteur d’oubli Ab→Ens&#x27;,&#x27;le foncteur constant&#x27;,&#x27;l’identité seulement&#x27;,&#x27;le foncteur opposé&#x27;],`Une flèche A→X×Y correspond à une paire de flèches A→X et A→Y.`),
             Q(&#x27;j17&#x27;,5,&#x27;Pourquoi les identités triangulaires interviennent-elles ?&#x27;, &#x27;Elles garantissent que unité et counité se correspondent de façon cohérente&#x27;,[&#x27;Elles rendent tous les objets égaux&#x27;,&#x27;Elles imposent la commutativité générale&#x27;,&#x27;Elles remplacent la naturalité&#x27;,&#x27;Elles disent F=G&#x27;],`Elles expriment que les deux passages aller-retour restituent F et G.`),
             Q(&#x27;j18&#x27;,5,&#x27;Dans l’adjonction Disc ⊣ U entre Ens et Top, pourquoi HomTop(Disc(X),Y) ≅ HomEns(X,U(Y)) ?&#x27;, &#x27;Toute fonction issue d’un espace discret est continue&#x27;,[&#x27;Toute fonction vers un espace quelconque est constante&#x27;,&#x27;Tous les espaces sont discrets&#x27;,&#x27;U ajoute une topologie&#x27;,&#x27;X et Y ont même cardinal&#x27;],`La topologie discrète rend la condition de continuité automatique au départ.`),
-            Q(&#x27;j19&#x27;,5,&#x27;Une bijection isolée entre deux ensembles Hom suffit-elle à prouver une adjonction ?&#x27;, &#x27;Non, il faut une famille naturelle pour tous A et B&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui si elle est finie&#x27;,&#x27;Seulement si F=G&#x27;,&#x27;Non, aucune bijection ne convient jamais&#x27;],`L’uniformité naturelle est le cœur de la notion.`),
+            Q(&#x27;j19&#x27;,5,&#x27;Une bijection isolée entre deux ensembles Hom suffit-elle à prouver une adjonction ?&#x27;, &#x27;Non, il faut une famille naturelle pour tous A et B&#x27;,[&#x27;Oui, toujours&#x27;,&#x27;Oui, si elle est finie&#x27;,&#x27;Seulement si F=G&#x27;,&#x27;Non, aucune bijection ne convient jamais&#x27;],`L’uniformité naturelle est le cœur de la notion.`),
             Q(&#x27;j20&#x27;,5,&#x27;Une adjonction peut être vue comme…&#x27;,&#x27;une traduction naturelle entre deux problèmes de morphismes&#x27;,[&#x27;une égalité stricte de catégories&#x27;,&#x27;une composition commutative&#x27;,&#x27;un unique objet&#x27;,&#x27;une fonction sans type&#x27;],`Elle convertit canoniquement les flèches F(A)→B en flèches A→G(B), et réciproquement.`)
           ]
         ];
@@ -1337,15 +1485,13 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
 
       function prepareQuestion(item, rng, answerCount) {
-        const reserve = [&#x27;Tous les objets deviennent égaux&#x27;, &#x27;Il s’agit nécessairement d’une identité&#x27;, &#x27;Aucune structure n’est préservée&#x27;, &#x27;La composition n’est jamais définie&#x27;, &#x27;Un objet sans aucun morphisme&#x27;];
-        const available = [...new Set([...item.wrong, ...reserve])].filter(answer =&gt; answer !== item.correct);
-        const distractors = shuffled(available, rng).slice(0, answerCount - 1);
+        const distractors = item.wrong.slice(0, answerCount - 1);
         const answers = shuffled([item.correct, ...distractors], rng);
         return { id: item.id, difficulty: item.difficulty, q: item.q, answers, ok: answers.indexOf(item.correct), why: item.why };
       }
 
       const freshState = () =&gt; ({
-        schemaVersion: 3,
+        schemaVersion: 5,
         gameSeed: `${Date.now()}-${Math.random()}`,
         currentLevel: 0,
         currentQuestion: 0,
@@ -1366,10 +1512,10 @@ html&gt;body{padding:0}&lt;/style&gt;
         bestScores: {},
         timerStart: null
       });
-      const freshSaveBank = () =&gt; ({ version: 3, slots: Array(SLOT_COUNT).fill(null) });
+      const freshSaveBank = () =&gt; ({ version: 4, slots: Array(SLOT_COUNT).fill(null) });
 
       function normalizeState(saved) {
-        if (!saved || typeof saved !== &#x27;object&#x27; || saved.schemaVersion !== 3) return freshState();
+        if (!saved || typeof saved !== &#x27;object&#x27; || saved.schemaVersion !== 5) return freshState();
         const normalized = Object.assign(freshState(), saved, {
           completed: Array.isArray(saved.completed) ? saved.completed : [],
           seen: Array.isArray(saved.seen) ? saved.seen : [],
@@ -1441,9 +1587,9 @@ html&gt;body{padding:0}&lt;/style&gt;
       function rankFor(candidate) {
         const n = scoreFor(candidate);
         if ((candidate.completed || []).length === levels.length) return &#x27;Cartographe&#x27;;
-        if (n &gt;= 90) return &#x27;Naturaliste&#x27;;
-        if (n &gt;= 60) return &#x27;Fonctoriste&#x27;;
-        if (n &gt;= 30) return &#x27;Navigateur&#x27;;
+        if (n &gt;= 48) return &#x27;Naturaliste&#x27;;
+        if (n &gt;= 32) return &#x27;Fonctoriste&#x27;;
+        if (n &gt;= 16) return &#x27;Navigateur&#x27;;
         return &#x27;Novice&#x27;;
       }
 
@@ -1467,12 +1613,10 @@ html&gt;body{padding:0}&lt;/style&gt;
         state.runCounts[levelIndex] = count;
         const rng = seededRandom(`${state.gameSeed}:island:${levelIndex}:run:${count}`);
         const pool = questionPool(levelIndex, `${state.gameSeed}:${count}`);
-        const selected = [];
-        for (let difficulty = 1; difficulty &lt;= 5; difficulty += 1) {
-          selected.push(...shuffled(pool.filter(item =&gt; item.difficulty === difficulty), rng).slice(0, 3));
-        }
-        const answerCount = levelIndex &gt;= 5 ? 6 : 4;
-        state.runs[levelIndex] = selected.map(item =&gt; prepareQuestion(item, rng, answerCount));
+        const patterns = [[2, 2, 1, 1, 1], [2, 2, 2, 1, 1], [2, 2, 2, 2, 1]];
+        const pattern = patterns[QUESTION_COUNTS[levelIndex] - 7];
+        const selected = pattern.flatMap((count, difficultyIndex) =&gt; shuffled(pool.filter(item =&gt; item.difficulty === difficultyIndex + 1), rng).slice(0, count));
+        state.runs[levelIndex] = selected.map(item =&gt; prepareQuestion(item, rng, 4));
         return state.runs[levelIndex];
       }
 
@@ -1509,7 +1653,7 @@ html&gt;body{padding:0}&lt;/style&gt;
               &lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;cat-menu-continue&quot; ${occupiedCount ? &#x27;&#x27; : &#x27;disabled&#x27;}&gt;Reprendre un voyage&lt;/button&gt;
             &lt;/div&gt;
             &lt;div class=&quot;menu-meta text-small&quot;&gt;
-              &lt;span&gt;120 missions progressives&lt;/span&gt;&lt;span class=&quot;meta-divider&quot; aria-hidden=&quot;true&quot;&gt;◆&lt;/span&gt;
+              &lt;span&gt;64 missions progressives&lt;/span&gt;&lt;span class=&quot;meta-divider&quot; aria-hidden=&quot;true&quot;&gt;◆&lt;/span&gt;
               &lt;span&gt;10 journaux de voyage&lt;/span&gt;&lt;span class=&quot;meta-divider&quot; aria-hidden=&quot;true&quot;&gt;◆&lt;/span&gt;
               &lt;span&gt;${occupiedCount} sauvegarde${occupiedCount === 1 ? &#x27;&#x27; : &#x27;s&#x27;} active${occupiedCount === 1 ? &#x27;&#x27; : &#x27;s&#x27;}&lt;/span&gt;
             &lt;/div&gt;
@@ -1637,6 +1781,35 @@ html&gt;body{padding:0}&lt;/style&gt;
         renderNotebook();
       }
 
+      let mathConversionQueue = Promise.resolve();
+
+      function typesetMath(container) {
+        if (!container || !window.MathJax || typeof window.MathJax.tex2chtmlPromise !== &#x27;function&#x27;) return;
+        container.querySelectorAll(&#x27;[data-math-tex]:not([data-math-pending])&#x27;).forEach(target =&gt; {
+          const tex = target.getAttribute(&#x27;data-math-tex&#x27;) || &#x27;&#x27;;
+          target.setAttribute(&#x27;data-math-pending&#x27;, &#x27;true&#x27;);
+          mathConversionQueue = mathConversionQueue
+            .catch(() =&gt; {})
+            .then(() =&gt; window.MathJax.tex2chtmlPromise(tex, { display: false }))
+            .then(output =&gt; {
+              if (!target.isConnected) return;
+              target.replaceChildren(output);
+              target.removeAttribute(&#x27;data-math-pending&#x27;);
+              target.removeAttribute(&#x27;data-math-tex&#x27;);
+              target.removeAttribute(&#x27;data-math-fallback&#x27;);
+            })
+            .catch(() =&gt; {
+              if (!target.isConnected) return;
+              target.textContent = target.getAttribute(&#x27;data-math-fallback&#x27;) || tex;
+              target.removeAttribute(&#x27;data-math-pending&#x27;);
+            });
+        });
+      }
+
+      function clearMath(container) {
+        if (!container) return;
+      }
+
       function renderStats() {
         root.querySelector(&#x27;#cat-islands&#x27;).textContent = `${state.completed.length} / ${levels.length}`;
         root.querySelector(&#x27;#cat-stars&#x27;).textContent = String(score());
@@ -1682,6 +1855,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 
       function renderPlay() {
         const play = root.querySelector(&#x27;#cat-play&#x27;);
+        clearMath(play);
         if (state.completed.length === levels.length &amp;&amp; state.currentLevel &gt;= levels.length) {
           play.innerHTML = `&lt;div class=&quot;ending&quot;&gt;
             &lt;span class=&quot;eyebrow&quot;&gt;Expédition accomplie&lt;/span&gt;
@@ -1692,6 +1866,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-revisit&quot;&gt;Revisiter la carte&lt;/button&gt;
           &lt;/div&gt;`;
           play.querySelector(&#x27;#cat-revisit&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { state.currentLevel = 0; state.currentQuestion = 0; state.viewMode = &#x27;course&#x27;; state.coursePage = 0; saveState(); renderAll(); });
+          typesetMath(play);
           return;
         }
 
@@ -1728,14 +1903,14 @@ html&gt;body{padding:0}&lt;/style&gt;
           &lt;/div&gt;
           &lt;div class=&quot;concept-strip&quot;&gt;
             &lt;span class=&quot;concept-icon&quot; aria-hidden=&quot;true&quot;&gt;∴&lt;/span&gt;
-            &lt;div class=&quot;concept-copy&quot;&gt;&lt;strong&gt;${level.concept}&lt;/strong&gt;&lt;span&gt;${level.intro}&lt;/span&gt;&lt;/div&gt;
+            &lt;div class=&quot;concept-copy&quot;&gt;&lt;strong&gt;${level.concept}&lt;/strong&gt;&lt;span&gt;${mathText(level.intro)}&lt;/span&gt;&lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&quot;diagram&quot;&gt;${diagrams[level.diagram]}&lt;/div&gt;
+          &lt;div class=&quot;diagram quiz-diagram&quot;&gt;${diagramMarkup(level.diagram)}&lt;/div&gt;
           &lt;div class=&quot;question-zone&quot;&gt;
             &lt;div class=&quot;difficulty&quot;&gt;&lt;span class=&quot;question-label&quot;&gt;Question d’exploration&lt;/span&gt;&lt;span class=&quot;difficulty-marks&quot; aria-label=&quot;Difficulté ${item.difficulty} sur 5&quot;&gt;${difficulty}&lt;/span&gt;&lt;/div&gt;
-            &lt;div class=&quot;question&quot;&gt;${item.q}&lt;/div&gt;
-            &lt;div class=&quot;answers&quot;&gt;${item.answers.map((answer, i) =&gt; `&lt;button type=&quot;button&quot; class=&quot;btn btn-block&quot; data-answer=&quot;${i}&quot; ${savedCorrect ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;&lt;span class=&quot;choice-key&quot; aria-hidden=&quot;true&quot;&gt;${String.fromCharCode(65 + i)}&lt;/span&gt;&lt;span&gt;${answer}&lt;/span&gt;&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
-            &lt;div class=&quot;feedback ${savedCorrect ? &#x27;is-success&#x27; : &#x27;&#x27;}&quot; id=&quot;cat-feedback&quot;&gt;${savedCorrect ? `✓ ${item.why}` : &#x27;Choisis une réponse pour tester ton intuition.&#x27;}&lt;/div&gt;
+            &lt;div class=&quot;question&quot;&gt;${mathText(item.q)}&lt;/div&gt;
+            &lt;div class=&quot;answers&quot;&gt;${item.answers.map((answer, i) =&gt; `&lt;button type=&quot;button&quot; class=&quot;btn btn-block&quot; data-answer=&quot;${i}&quot; ${savedCorrect ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;&lt;span class=&quot;choice-key&quot; aria-hidden=&quot;true&quot;&gt;${String.fromCharCode(65 + i)}&lt;/span&gt;&lt;span&gt;${mathText(answer)}&lt;/span&gt;&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
+            &lt;div class=&quot;feedback ${savedCorrect ? &#x27;is-success&#x27; : &#x27;&#x27;}&quot; id=&quot;cat-feedback&quot;&gt;${savedCorrect ? `✓ ${mathText(item.why)}` : &#x27;Choisis une réponse pour tester ton intuition.&#x27;}&lt;/div&gt;
             ${savedCorrect ? `&lt;div class=&quot;score-note&quot;&gt;&lt;span&gt;Cette réponse : &lt;strong&gt;${(stat.score || 0).toLocaleString(&#x27;fr-FR&#x27;)} points&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;${stat.firstTry ? &#x27;Juste du premier coup&#x27; : `${stat.attempts || 1} tentatives`}&lt;/span&gt;&lt;span&gt;${Math.round((stat.thinkingMs || 0) / 1000)} s de réflexion&lt;/span&gt;&lt;/div&gt;` : &#x27;&#x27;}
           &lt;/div&gt;
           &lt;div class=&quot;action-row&quot;&gt;
@@ -1764,6 +1939,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           }
         });
         play.querySelector(&#x27;#cat-next&#x27;).addEventListener(&#x27;click&#x27;, nextMission);
+        typesetMath(play);
       }
 
       function renderCourse(play, levelIndex) {
@@ -1777,20 +1953,20 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;div class=&quot;mission-title&quot;&gt;
               &lt;span class=&quot;eyebrow&quot;&gt;Territoire ${String(levelIndex + 1).padStart(2, &#x27;0&#x27;)} · Cours ${pageIndex + 1}/${level.course.length}&lt;/span&gt;
               &lt;h2&gt;${level.icon} ${level.name}&lt;/h2&gt;
-              &lt;span class=&quot;mission-kicker&quot;&gt;${level.intro}&lt;/span&gt;
+              &lt;span class=&quot;mission-kicker&quot;&gt;${mathText(level.intro)}&lt;/span&gt;
             &lt;/div&gt;
             &lt;div class=&quot;mission-progress&quot;&gt;
               ${state.returnToQuiz ? &#x27;&lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-return-quiz&quot;&gt;Retour à l’épreuve&lt;/button&gt;&#x27; : &#x27;&#x27;}
               &lt;div class=&quot;course-progress&quot; aria-label=&quot;Progression du cours&quot;&gt;${progress}&lt;/div&gt;
             &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div class=&quot;diagram&quot;&gt;${diagrams[level.diagram]}&lt;/div&gt;
+          &lt;div class=&quot;diagram&quot;&gt;${diagramMarkup(level.diagram)}&lt;/div&gt;
           &lt;article class=&quot;course-copy&quot;&gt;
             &lt;span class=&quot;eyebrow&quot;&gt;Leçon ${String(pageIndex + 1).padStart(2, &#x27;0&#x27;)}&lt;/span&gt;
             &lt;h3&gt;${page.title}&lt;/h3&gt;
-            &lt;p&gt;${page.body}&lt;/p&gt;
-            &lt;ul class=&quot;course-points&quot;&gt;${page.points.map(point =&gt; `&lt;li&gt;${point}&lt;/li&gt;`).join(&#x27;&#x27;)}&lt;/ul&gt;
-            &lt;div class=&quot;course-example&quot;&gt;&lt;strong&gt;Exemple&lt;/strong&gt;&lt;span&gt;${page.example}&lt;/span&gt;&lt;/div&gt;
+            &lt;p&gt;${mathText(page.body)}&lt;/p&gt;
+            &lt;ul class=&quot;course-points&quot;&gt;${page.points.map(point =&gt; `&lt;li&gt;${mathText(point)}&lt;/li&gt;`).join(&#x27;&#x27;)}&lt;/ul&gt;
+            &lt;div class=&quot;course-example&quot;&gt;&lt;strong&gt;Exemple&lt;/strong&gt;&lt;span&gt;${mathText(page.example)}&lt;/span&gt;&lt;/div&gt;
           &lt;/article&gt;
           &lt;div class=&quot;course-actions&quot;&gt;
             &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-course-prev&quot; ${pageIndex === 0 ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;← Partie précédente&lt;/button&gt;
@@ -1806,6 +1982,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           if (pageIndex &lt; level.course.length - 1) { state.coursePage += 1; saveState(); renderPlay(); }
           else beginQuiz();
         });
+        typesetMath(play);
       }
 
       function beginQuiz() {
@@ -1918,7 +2095,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 
       function openResetPanel() {
         const levelIndex = Math.min(state.currentLevel, levels.length - 1);
-        root.querySelector(&#x27;#cat-reset-island-detail&#x27;).textContent = `Île actuelle (${levels[levelIndex].name}) : renouvelle ses 15 questions et efface son score en cours. Le meilleur score déjà obtenu reste conservé.`;
+        root.querySelector(&#x27;#cat-reset-island-detail&#x27;).textContent = `Île actuelle (${levels[levelIndex].name}) : renouvelle ses ${QUESTION_COUNTS[levelIndex]} questions et efface son score en cours. Le meilleur score déjà obtenu reste conservé.`;
         resetPanel.hidden = false;
         resetButton.setAttribute(&#x27;aria-expanded&#x27;, &#x27;true&#x27;);
         root.querySelector(&#x27;#cat-reset-island&#x27;).focus();
@@ -1973,6 +2150,7 @@ html&gt;body{padding:0}&lt;/style&gt;
 
       persistSaveBank();
       renderMenu();
+      window.addEventListener(&#x27;load&#x27;, () =&gt; typesetMath(root), { once: true });
     })();
   &lt;/script&gt;
 &lt;/div&gt;
