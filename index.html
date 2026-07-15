@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Archipel Des Fleches</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" title="Archipel Des Fleches" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Archipel Des Fleches&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;archipel-categories&quot;&gt;
+  &lt;style&gt;
+    #archipel-categories { color: var(--foreground); }
+    #archipel-categories .game-shell { display: grid; gap: 18px; }
+    #archipel-categories .game-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    #archipel-categories .brand { display: flex; align-items: center; gap: 10px; }
+    #archipel-categories .brand-mark { font-size: 28px; }
+    #archipel-categories .brand-copy { display: grid; gap: 2px; }
+    #archipel-categories .brand-name { font-weight: 500; }
+    #archipel-categories .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #archipel-categories .roadmap { display: grid; grid-template-columns: repeat(8, minmax(64px, 1fr)); gap: 8px; align-items: start; }
+    #archipel-categories .island { min-width: 0; display: grid; justify-items: center; gap: 5px; text-align: center; }
+    #archipel-categories .island .btn { width: 100%; min-height: 48px; }
+    #archipel-categories .island-label { max-width: 100%; overflow-wrap: anywhere; color: var(--muted-foreground); }
+    #archipel-categories .island[aria-current=&quot;step&quot;] .island-label { color: var(--foreground); font-weight: 500; }
+    #archipel-categories .island-lock { opacity: .55; }
+    #archipel-categories .play-card { display: grid; gap: 18px; }
+    #archipel-categories .mission-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    #archipel-categories .mission-title { display: grid; gap: 5px; }
+    #archipel-categories .mission-kicker { color: var(--muted-foreground); }
+    #archipel-categories .mission-dots { display: flex; gap: 6px; align-items: center; }
+    #archipel-categories .mission-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--muted); border: 1px solid var(--border); }
+    #archipel-categories .mission-dot.is-done { background: var(--viz-series-1); border-color: transparent; }
+    #archipel-categories .mission-dot.is-current { background: var(--primary); border-color: var(--primary); }
+    #archipel-categories .concept-strip { display: flex; align-items: flex-start; gap: 10px; padding-block: 4px; }
+    #archipel-categories .concept-icon { font-size: 22px; flex: 0 0 auto; }
+    #archipel-categories .concept-copy { display: grid; gap: 4px; }
+    #archipel-categories .diagram { min-height: 180px; display: grid; place-items: center; padding: 8px; color: var(--foreground); }
+    #archipel-categories .diagram svg { width: 100%; max-width: 560px; height: 180px; overflow: visible; }
+    #archipel-categories .diagram .node { fill: color-mix(in srgb, var(--viz-series-1) 14%, var(--card)); stroke: var(--border); stroke-width: 1.5; }
+    #archipel-categories .diagram .node-alt { fill: color-mix(in srgb, var(--viz-series-2) 14%, var(--card)); stroke: var(--border); stroke-width: 1.5; }
+    #archipel-categories .diagram .edge { stroke: var(--foreground); stroke-width: 2; fill: none; }
+    #archipel-categories .diagram .soft-edge { stroke: var(--muted-foreground); stroke-width: 1.5; fill: none; stroke-dasharray: 5 5; }
+    #archipel-categories .diagram text { fill: var(--foreground); font-family: inherit; font-size: 14px; }
+    #archipel-categories .question-zone { display: grid; gap: 12px; }
+    #archipel-categories .question { font-weight: 500; }
+    #archipel-categories .answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    #archipel-categories .answers .btn { white-space: normal; text-align: left; justify-content: flex-start; }
+    #archipel-categories .feedback { min-height: 42px; display: flex; align-items: center; gap: 8px; color: var(--muted-foreground); }
+    #archipel-categories .feedback.is-success { color: var(--foreground); }
+    #archipel-categories .feedback.is-error { color: var(--destructive); }
+    #archipel-categories .action-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    #archipel-categories .notebook { display: grid; gap: 10px; }
+    #archipel-categories .discoveries { display: flex; flex-wrap: wrap; gap: 8px; }
+    #archipel-categories .ending { display: grid; gap: 18px; text-align: center; justify-items: center; padding-block: 14px; }
+    #archipel-categories .ending-mark { font-size: 52px; }
+    #archipel-categories .ending-copy { max-width: 560px; }
+    #archipel-categories .sr-message { min-height: 1px; }
+    @media (max-width: 720px) {
+      #archipel-categories .roadmap { grid-template-columns: repeat(4, minmax(64px, 1fr)); }
+      #archipel-categories .answers { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 430px) {
+      #archipel-categories .stats { grid-template-columns: 1fr; }
+      #archipel-categories .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #archipel-categories .diagram { min-height: 150px; padding-inline: 0; }
+      #archipel-categories .diagram svg { height: 150px; }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;game-shell&quot;&gt;
+    &lt;div class=&quot;game-header&quot;&gt;
+      &lt;div class=&quot;brand&quot;&gt;
+        &lt;span class=&quot;brand-mark&quot; aria-hidden=&quot;true&quot;&gt;🏝️&lt;/span&gt;
+        &lt;div class=&quot;brand-copy&quot;&gt;
+          &lt;span class=&quot;brand-name&quot;&gt;L’Archipel des Flèches&lt;/span&gt;
+          &lt;span class=&quot;text-small text-muted&quot;&gt;Une expédition dans le monde des catégories&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-reset&quot;&gt;Recommencer&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;viz-grid stats&quot; aria-label=&quot;Progression&quot;&gt;
+      &lt;div class=&quot;card viz-stat&quot;&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Îles explorées&lt;/span&gt;
+        &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-islands&quot;&gt;0 / 8&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;card viz-stat&quot;&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Éclats de savoir&lt;/span&gt;
+        &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-stars&quot;&gt;0&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;card viz-stat&quot;&gt;
+        &lt;span class=&quot;text-muted&quot;&gt;Titre&lt;/span&gt;
+        &lt;span class=&quot;viz-stat-value&quot; id=&quot;cat-rank&quot;&gt;Novice&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;nav class=&quot;roadmap&quot; id=&quot;cat-roadmap&quot; aria-label=&quot;Carte des îles&quot;&gt;&lt;/nav&gt;
+
+    &lt;section class=&quot;card play-card&quot; id=&quot;cat-play&quot; aria-live=&quot;polite&quot;&gt;&lt;/section&gt;
+
+    &lt;section class=&quot;notebook&quot; aria-labelledby=&quot;cat-notebook-title&quot;&gt;
+      &lt;div class=&quot;viz-row&quot;&gt;
+        &lt;strong id=&quot;cat-notebook-title&quot;&gt;Carnet de bord&lt;/strong&gt;
+        &lt;span class=&quot;text-small text-muted&quot;&gt;Les notions maîtrisées restent mémorisées sur cet appareil.&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;discoveries&quot; id=&quot;cat-discoveries&quot;&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div class=&quot;sr-only sr-message&quot; id=&quot;cat-live&quot; aria-live=&quot;assertive&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;archipel-categories&#x27;);
+      const STORAGE_KEY = &#x27;archipel-categories-v1&#x27;;
+      const arrow = &#x27;&lt;marker id=&quot;arrow&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
+      const arrowSoft = &#x27;&lt;marker id=&quot;arrow-soft&quot; markerWidth=&quot;8&quot; markerHeight=&quot;8&quot; refX=&quot;7&quot; refY=&quot;4&quot; orient=&quot;auto&quot;&gt;&lt;path d=&quot;M0,0 L8,4 L0,8 Z&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/path&gt;&lt;/marker&gt;&#x27;;
+
+      const diagrams = {
+        basic: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Une flèche f va de l’objet A vers l’objet B&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;120&quot; cy=&quot;90&quot; r=&quot;34&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;440&quot; cy=&quot;90&quot; r=&quot;34&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M155 90 H402&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;120&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;440&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;/svg&gt;`,
+        chain: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Deux flèches composables, f de A vers B puis g de B vers C&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;80&quot; cy=&quot;90&quot; r=&quot;30&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;280&quot; cy=&quot;90&quot; r=&quot;30&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;480&quot; cy=&quot;90&quot; r=&quot;30&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M111 90 H246&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M311 90 H446&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;80&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;480&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;C&lt;/text&gt;&lt;text x=&quot;180&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;text x=&quot;380&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;g&lt;/text&gt;&lt;/svg&gt;`,
+        identity: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Une boucle identité sur A et une flèche f de A vers B&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;170&quot; cy=&quot;105&quot; r=&quot;32&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;420&quot; cy=&quot;105&quot; r=&quot;32&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M203 105 H385&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M150 74 C112 18 228 18 190 74&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;170&quot; y=&quot;110&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;420&quot; y=&quot;110&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;294&quot; y=&quot;91&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;text x=&quot;170&quot; y=&quot;27&quot; text-anchor=&quot;middle&quot;&gt;idₐ&lt;/text&gt;&lt;/svg&gt;`,
+        assoc: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Un chemin de trois flèches de A à D&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;55&quot; cy=&quot;90&quot; r=&quot;26&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;205&quot; cy=&quot;90&quot; r=&quot;26&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;355&quot; cy=&quot;90&quot; r=&quot;26&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;505&quot; cy=&quot;90&quot; r=&quot;26&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M82 90 H177&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M232 90 H327&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M382 90 H477&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;55&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;205&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;355&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;C&lt;/text&gt;&lt;text x=&quot;505&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;D&lt;/text&gt;&lt;text x=&quot;130&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;g&lt;/text&gt;&lt;text x=&quot;430&quot; y=&quot;76&quot; text-anchor=&quot;middle&quot;&gt;h&lt;/text&gt;&lt;/svg&gt;`,
+        triangle: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Triangle avec f de A vers B, g de B vers C et h de A vers C&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;100&quot; cy=&quot;45&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;460&quot; cy=&quot;45&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;280&quot; cy=&quot;145&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M129 45 H428&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M436 62 L307 132&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;soft-edge&quot; d=&quot;M124 62 L252 132&quot; marker-end=&quot;url(#arrow-soft)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;100&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;460&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;150&quot; text-anchor=&quot;middle&quot;&gt;C&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;32&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;text x=&quot;386&quot; y=&quot;111&quot; text-anchor=&quot;middle&quot;&gt;g&lt;/text&gt;&lt;text x=&quot;173&quot; y=&quot;111&quot; text-anchor=&quot;middle&quot;&gt;h&lt;/text&gt;&lt;/svg&gt;`,
+        functor: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Un foncteur F transporte une flèche de la catégorie C vers la catégorie D&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;75&quot; cy=&quot;55&quot; r=&quot;25&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;225&quot; cy=&quot;55&quot; r=&quot;25&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M101 55 H197&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;335&quot; cy=&quot;125&quot; r=&quot;25&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;485&quot; cy=&quot;125&quot; r=&quot;25&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M361 125 H457&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;soft-edge&quot; d=&quot;M245 75 L315 107&quot; marker-end=&quot;url(#arrow-soft)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;75&quot; y=&quot;60&quot; text-anchor=&quot;middle&quot;&gt;A&lt;/text&gt;&lt;text x=&quot;225&quot; y=&quot;60&quot; text-anchor=&quot;middle&quot;&gt;B&lt;/text&gt;&lt;text x=&quot;335&quot; y=&quot;130&quot; text-anchor=&quot;middle&quot;&gt;F(A)&lt;/text&gt;&lt;text x=&quot;485&quot; y=&quot;130&quot; text-anchor=&quot;middle&quot;&gt;F(B)&lt;/text&gt;&lt;text x=&quot;150&quot; y=&quot;42&quot; text-anchor=&quot;middle&quot;&gt;f&lt;/text&gt;&lt;text x=&quot;410&quot; y=&quot;112&quot; text-anchor=&quot;middle&quot;&gt;F(f)&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;82&quot; text-anchor=&quot;middle&quot;&gt;F&lt;/text&gt;&lt;/svg&gt;`,
+        natural: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Carré de naturalité entre F et G&quot;&gt;&lt;defs&gt;${arrow}&lt;/defs&gt;&lt;circle class=&quot;node&quot; cx=&quot;120&quot; cy=&quot;45&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node&quot; cx=&quot;440&quot; cy=&quot;45&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;120&quot; cy=&quot;140&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;circle class=&quot;node-alt&quot; cx=&quot;440&quot; cy=&quot;140&quot; r=&quot;28&quot;&gt;&lt;/circle&gt;&lt;path class=&quot;edge&quot; d=&quot;M149 45 H408&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M149 140 H408&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M120 74 V108&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;edge&quot; d=&quot;M440 74 V108&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;120&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot;&gt;F(A)&lt;/text&gt;&lt;text x=&quot;440&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot;&gt;F(B)&lt;/text&gt;&lt;text x=&quot;120&quot; y=&quot;145&quot; text-anchor=&quot;middle&quot;&gt;G(A)&lt;/text&gt;&lt;text x=&quot;440&quot; y=&quot;145&quot; text-anchor=&quot;middle&quot;&gt;G(B)&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;32&quot; text-anchor=&quot;middle&quot;&gt;F(f)&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;128&quot; text-anchor=&quot;middle&quot;&gt;G(f)&lt;/text&gt;&lt;text x=&quot;92&quot; y=&quot;98&quot; text-anchor=&quot;middle&quot;&gt;ηₐ&lt;/text&gt;&lt;text x=&quot;468&quot; y=&quot;98&quot; text-anchor=&quot;middle&quot;&gt;ηᵦ&lt;/text&gt;&lt;/svg&gt;`,
+        adjunction: `&lt;svg viewBox=&quot;0 0 560 180&quot; role=&quot;img&quot; aria-label=&quot;Deux catégories reliées par des foncteurs adjoints F et G&quot;&gt;&lt;defs&gt;${arrow}${arrowSoft}&lt;/defs&gt;&lt;ellipse class=&quot;node&quot; cx=&quot;145&quot; cy=&quot;90&quot; rx=&quot;95&quot; ry=&quot;62&quot;&gt;&lt;/ellipse&gt;&lt;ellipse class=&quot;node-alt&quot; cx=&quot;415&quot; cy=&quot;90&quot; rx=&quot;95&quot; ry=&quot;62&quot;&gt;&lt;/ellipse&gt;&lt;path class=&quot;edge&quot; d=&quot;M232 67 C280 38 319 38 368 67&quot; marker-end=&quot;url(#arrow)&quot;&gt;&lt;/path&gt;&lt;path class=&quot;soft-edge&quot; d=&quot;M328 114 C280 143 241 143 192 114&quot; marker-end=&quot;url(#arrow-soft)&quot;&gt;&lt;/path&gt;&lt;text x=&quot;145&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;𝒞&lt;/text&gt;&lt;text x=&quot;415&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;𝒟&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;38&quot; text-anchor=&quot;middle&quot;&gt;F&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot;&gt;G&lt;/text&gt;&lt;text x=&quot;280&quot; y=&quot;95&quot; text-anchor=&quot;middle&quot;&gt;F ⊣ G&lt;/text&gt;&lt;/svg&gt;`
+      };
+
+      const levels = [
+        {
+          icon: &#x27;🔹&#x27;, short: &#x27;Objets&#x27;, name: &#x27;La Plage des Objets&#x27;, concept: &#x27;Objets et morphismes&#x27;, diagram: &#x27;basic&#x27;,
+          intro: &#x27;Une catégorie est un monde peuplé d’objets reliés par des flèches. Une flèche possède toujours une source et une cible.&#x27;,
+          questions: [
+            { q: &#x27;Dans f : A → B, quelle est la cible de f ?&#x27;, a: [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;f&#x27;, &#x27;A → B&#x27;], ok: 1, why: &#x27;B est le point d’arrivée : la cible de f.&#x27; },
+            { q: &#x27;Lequel représente le mieux un morphisme ?&#x27;, a: [&#x27;Une ville&#x27;, &#x27;Un trajet entre deux villes&#x27;, &#x27;La liste des villes&#x27;, &#x27;Une carte vide&#x27;], ok: 1, why: &#x27;Un morphisme exprime un passage ou une transformation entre deux objets.&#x27; },
+            { q: &#x27;Si recette : Ingrédients → Gâteau, que joue “Ingrédients” ?&#x27;, a: [&#x27;La source&#x27;, &#x27;La cible&#x27;, &#x27;La flèche&#x27;, &#x27;L’identité&#x27;], ok: 0, why: &#x27;Les ingrédients sont le point de départ : la source.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🧩&#x27;, short: &#x27;Composer&#x27;, name: &#x27;Le Détroit de la Composition&#x27;, concept: &#x27;Composition&#x27;, diagram: &#x27;chain&#x27;,
+          intro: &#x27;Deux flèches s’emboîtent lorsque la cible de la première est la source de la seconde. On lit g ∘ f : « g après f ».&#x27;,
+          questions: [
+            { q: &#x27;Avec f : A → B et g : B → C, quel trajet va de A vers C ?&#x27;, a: [&#x27;f ∘ g&#x27;, &#x27;g ∘ f&#x27;, &#x27;f ∘ f&#x27;, &#x27;g ∘ g&#x27;], ok: 1, why: &#x27;On suit d’abord f, puis g : cela s’écrit g ∘ f.&#x27; },
+            { q: &#x27;Laquelle de ces compositions est bien typée ?&#x27;, a: [&#x27;f ∘ g : A → C&#x27;, &#x27;g ∘ f : A → C&#x27;, &#x27;g ∘ g : B → C&#x27;, &#x27;f ∘ f : A → B&#x27;], ok: 1, why: &#x27;La sortie de f est B, exactement l’entrée de g.&#x27; },
+            { q: &#x27;“Enfiler ses chaussettes, puis ses chaussures” se note…&#x27;, a: [&#x27;chaussettes ∘ chaussures&#x27;, &#x27;chaussures ∘ chaussettes&#x27;, &#x27;chaussures → chaussettes&#x27;, &#x27;id ∘ chaussures&#x27;], ok: 1, why: &#x27;Dans g ∘ f, l’action f se produit d’abord : les chaussettes précèdent les chaussures.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🪞&#x27;, short: &#x27;Identités&#x27;, name: &#x27;L’Atoll des Identités&#x27;, concept: &#x27;Morphismes identité&#x27;, diagram: &#x27;identity&#x27;,
+          intro: &#x27;Chaque objet A possède une flèche idₐ : A → A qui ne change rien. Elle est neutre pour la composition.&#x27;,
+          questions: [
+            { q: &#x27;Quel est le type de idₐ ?&#x27;, a: [&#x27;A → A&#x27;, &#x27;A → B&#x27;, &#x27;B → A&#x27;, &#x27;A × A&#x27;], ok: 0, why: &#x27;L’identité part de A et revient à A.&#x27; },
+            { q: &#x27;Pour f : A → B, que vaut f ∘ idₐ ?&#x27;, a: [&#x27;idₐ&#x27;, &#x27;idᵦ&#x27;, &#x27;f&#x27;, &#x27;Impossible&#x27;], ok: 2, why: &#x27;Faire “rien sur A”, puis f, revient simplement à faire f.&#x27; },
+            { q: &#x27;Et que vaut idᵦ ∘ f ?&#x27;, a: [&#x27;f&#x27;, &#x27;idₐ&#x27;, &#x27;idᵦ&#x27;, &#x27;f ∘ f&#x27;], ok: 0, why: &#x27;Après f, ne rien changer sur B laisse encore f.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;⛓️&#x27;, short: &#x27;Associer&#x27;, name: &#x27;La Chaîne Associative&#x27;, concept: &#x27;Associativité&#x27;, diagram: &#x27;assoc&#x27;,
+          intro: &#x27;Dans une chaîne de flèches, les parenthèses changent l’ordre des calculs, jamais le résultat.&#x27;,
+          questions: [
+            { q: &#x27;Pour A → B → C → D, quelle égalité est vraie ?&#x27;, a: [&#x27;h ∘ (g ∘ f) = (h ∘ g) ∘ f&#x27;, &#x27;h ∘ (g ∘ f) = f ∘ (g ∘ h)&#x27;, &#x27;h ∘ g = g ∘ h&#x27;, &#x27;f ∘ f = f&#x27;], ok: 0, why: &#x27;C’est exactement la loi d’associativité.&#x27; },
+            { q: &#x27;L’associativité permet surtout de…&#x27;, a: [&#x27;Inverser les flèches&#x27;, &#x27;Oublier les objets&#x27;, &#x27;Replacer les parenthèses&#x27;, &#x27;Créer une identité&#x27;], ok: 2, why: &#x27;On peut regrouper les compositions comme on veut, sans modifier le chemin.&#x27; },
+            { q: &#x27;Quel trajet effectue toujours f, puis g, puis h ?&#x27;, a: [&#x27;f ∘ g ∘ h&#x27;, &#x27;h ∘ g ∘ f&#x27;, &#x27;g ∘ f ∘ h&#x27;, &#x27;h ∘ f ∘ g&#x27;], ok: 1, why: &#x27;La lecture opérationnelle se fait de droite à gauche.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🔺&#x27;, short: &#x27;Diagrammes&#x27;, name: &#x27;Le Triangle Commutatif&#x27;, concept: &#x27;Diagrammes commutatifs&#x27;, diagram: &#x27;triangle&#x27;,
+          intro: &#x27;Un diagramme commute lorsque tous les chemins de même départ et même arrivée donnent le même morphisme.&#x27;,
+          questions: [
+            { q: &#x27;Dans ce triangle, quelle équation exprime la commutativité ?&#x27;, a: [&#x27;h = g ∘ f&#x27;, &#x27;f = h ∘ g&#x27;, &#x27;g = f ∘ h&#x27;, &#x27;h = f ∘ g&#x27;], ok: 0, why: &#x27;Le chemin direct h égale le détour f puis g, soit g ∘ f.&#x27; },
+            { q: &#x27;Deux chemins commutatifs entre A et C…&#x27;, a: [&#x27;Ont la même longueur&#x27;, &#x27;Traversent les mêmes objets&#x27;, &#x27;Donnent le même morphisme&#x27;, &#x27;Sont toujours inverses&#x27;], ok: 2, why: &#x27;Seul le résultat morphique compte, pas le nombre d’étapes.&#x27; },
+            { q: &#x27;Dans un carré A→B, A→C, B→D, C→D, commuter signifie…&#x27;, a: [&#x27;bas ∘ droite = droite ∘ bas&#x27;, &#x27;B = C&#x27;, &#x27;Toutes les flèches sont identités&#x27;, &#x27;Le carré peut tourner&#x27;], ok: 0, why: &#x27;Les deux routes de A vers D doivent produire la même flèche composée.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🚢&#x27;, short: &#x27;Foncteurs&#x27;, name: &#x27;Le Ferry des Foncteurs&#x27;, concept: &#x27;Foncteurs&#x27;, diagram: &#x27;functor&#x27;,
+          intro: &#x27;Un foncteur F transporte objets et flèches d’une catégorie vers une autre, tout en respectant leur structure.&#x27;,
+          questions: [
+            { q: &#x27;Si f : A → B, quel doit être le type de F(f) ?&#x27;, a: [&#x27;F(B) → F(A)&#x27;, &#x27;A → B&#x27;, &#x27;F(A) → F(B)&#x27;, &#x27;F(f) → F(B)&#x27;], ok: 2, why: &#x27;Le foncteur transporte aussi la source et la cible.&#x27; },
+            { q: &#x27;Quelle loi de composition F doit-il respecter ?&#x27;, a: [&#x27;F(g ∘ f) = F(g) ∘ F(f)&#x27;, &#x27;F(g ∘ f) = F(f) ∘ F(g)&#x27;, &#x27;F(g) = F(f)&#x27;, &#x27;F(g ∘ f) = g ∘ f&#x27;], ok: 0, why: &#x27;Transporter un trajet composé revient à composer les trajets transportés.&#x27; },
+            { q: &#x27;Que devient une identité sous F ?&#x27;, a: [&#x27;Une flèche quelconque&#x27;, &#x27;id sur F(A)&#x27;, &#x27;L’objet A&#x27;, &#x27;Rien&#x27;], ok: 1, why: &#x27;Un foncteur préserve les identités : F(idₐ) = id_F(A).&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🌉&#x27;, short: &#x27;Naturelles&#x27;, name: &#x27;Le Pont des Transformations&#x27;, concept: &#x27;Transformations naturelles&#x27;, diagram: &#x27;natural&#x27;,
+          intro: &#x27;Une transformation naturelle η relie deux foncteurs F et G par une flèche ηₐ : F(A) → G(A) pour chaque objet A, de façon cohérente.&#x27;,
+          questions: [
+            { q: &#x27;Quel est le type de la composante ηₐ ?&#x27;, a: [&#x27;A → A&#x27;, &#x27;F(A) → G(A)&#x27;, &#x27;F → G(A)&#x27;, &#x27;G(A) → F(A)&#x27;], ok: 1, why: &#x27;Chaque composante relie les deux images du même objet A.&#x27; },
+            { q: &#x27;Quelle égalité fait commuter le carré de naturalité ?&#x27;, a: [&#x27;G(f) ∘ ηₐ = ηᵦ ∘ F(f)&#x27;, &#x27;F(f) ∘ ηₐ = ηᵦ ∘ G(f)&#x27;, &#x27;ηₐ = ηᵦ&#x27;, &#x27;F(f) = G(f)&#x27;], ok: 0, why: &#x27;Descendre puis avancer égale avancer puis descendre.&#x27; },
+            { q: &#x27;La naturalité exprime surtout…&#x27;, a: [&#x27;Une cohérence simultanée pour toutes les flèches&#x27;, &#x27;Une égalité entre tous les objets&#x27;, &#x27;L’existence d’un seul foncteur&#x27;, &#x27;L’absence de composition&#x27;], ok: 0, why: &#x27;Les composantes ne sont pas choisies isolément : elles respectent chaque morphisme.&#x27; }
+          ]
+        },
+        {
+          icon: &#x27;🧲&#x27;, short: &#x27;Adjonctions&#x27;, name: &#x27;Le Maelström des Adjonctions&#x27;, concept: &#x27;Adjonctions&#x27;, diagram: &#x27;adjunction&#x27;,
+          intro: &#x27;Une adjonction F ⊣ G est une correspondance naturelle entre des morphismes : construire via F d’un côté équivaut à décrire via G de l’autre.&#x27;,
+          questions: [
+            { q: &#x27;Quelle formule caractérise F ⊣ G ?&#x27;, a: [&#x27;Hom𝒟(F(A), B) ≅ Hom𝒞(A, G(B))&#x27;, &#x27;F(A) = G(B)&#x27;, &#x27;F ∘ G = id toujours&#x27;, &#x27;Hom(A,B) = A × B&#x27;], ok: 0, why: &#x27;Une adjonction est une bijection naturelle entre ces deux ensembles de morphismes.&#x27; },
+            { q: &#x27;Dans l’adjonction “groupe libre ⊣ oubli”, le foncteur oubli…&#x27;, a: [&#x27;Supprime les éléments&#x27;, &#x27;Garde l’ensemble sous-jacent&#x27;, &#x27;Inverse toutes les opérations&#x27;, &#x27;Crée un groupe libre&#x27;], ok: 1, why: &#x27;Il oublie la structure de groupe tout en conservant ses éléments.&#x27; },
+            { q: &#x27;L’idée intuitive d’une adjonction est…&#x27;, a: [&#x27;Deux catégories identiques&#x27;, &#x27;Une traduction optimale dans les deux sens&#x27;, &#x27;Une flèche sans cible&#x27;, &#x27;Une composition commutative&#x27;], ok: 1, why: &#x27;Les deux foncteurs offrent des traductions complémentaires reliées par une correspondance universelle.&#x27; }
+          ]
+        }
+      ];
+
+      const freshState = () =&gt; ({ currentLevel: 0, currentQuestion: 0, unlocked: 1, completed: [], correct: {}, attempts: {}, seen: [] });
+      let state = loadState();
+      let answered = false;
+
+      function loadState() {
+        try {
+          let raw = null;
+          try { raw = localStorage.getItem(STORAGE_KEY); } catch (_) {}
+          if (!raw &amp;&amp; window.name.startsWith(`${STORAGE_KEY}:`)) raw = window.name.slice(STORAGE_KEY.length + 1);
+          const saved = JSON.parse(raw);
+          if (!saved || typeof saved !== &#x27;object&#x27;) return freshState();
+          return Object.assign(freshState(), saved, {
+            completed: Array.isArray(saved.completed) ? saved.completed : [],
+            seen: Array.isArray(saved.seen) ? saved.seen : [],
+            correct: saved.correct || {},
+            attempts: saved.attempts || {}
+          });
+        } catch (_) { return freshState(); }
+      }
+
+      function saveState() {
+        const serialized = JSON.stringify(state);
+        try { localStorage.setItem(STORAGE_KEY, serialized); } catch (_) {}
+        try { window.name = `${STORAGE_KEY}:${serialized}`; } catch (_) {}
+      }
+
+      function score() {
+        return Object.values(state.correct).filter(Boolean).length;
+      }
+
+      function rank() {
+        const n = score();
+        if (state.completed.length === levels.length) return &#x27;Cartographe&#x27;;
+        if (n &gt;= 18) return &#x27;Naturaliste&#x27;;
+        if (n &gt;= 12) return &#x27;Fonctoriste&#x27;;
+        if (n &gt;= 6) return &#x27;Navigateur&#x27;;
+        return &#x27;Novice&#x27;;
+      }
+
+      function keyFor(levelIndex, questionIndex) { return `${levelIndex}-${questionIndex}`; }
+
+      function renderAll() {
+        renderStats();
+        renderRoadmap();
+        renderPlay();
+        renderNotebook();
+      }
+
+      function renderStats() {
+        root.querySelector(&#x27;#cat-islands&#x27;).textContent = `${state.completed.length} / ${levels.length}`;
+        root.querySelector(&#x27;#cat-stars&#x27;).textContent = String(score());
+        root.querySelector(&#x27;#cat-rank&#x27;).textContent = rank();
+      }
+
+      function renderRoadmap() {
+        const map = root.querySelector(&#x27;#cat-roadmap&#x27;);
+        map.innerHTML = levels.map((level, index) =&gt; {
+          const locked = index &gt;= state.unlocked;
+          const done = state.completed.includes(index);
+          const current = index === state.currentLevel;
+          return `&lt;div class=&quot;island${locked ? &#x27; island-lock&#x27; : &#x27;&#x27;}&quot; ${current ? &#x27;aria-current=&quot;step&quot;&#x27; : &#x27;&#x27;}&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn${current ? &#x27; is-selected&#x27; : &#x27;&#x27;}&quot; data-level=&quot;${index}&quot; ${locked ? &#x27;disabled&#x27; : &#x27;&#x27;} aria-label=&quot;${locked ? &#x27;Île verrouillée : &#x27; : &#x27;&#x27;}${level.name}&quot;&gt;${done ? &#x27;✓&#x27; : level.icon} ${index + 1}&lt;/button&gt;
+            &lt;span class=&quot;island-label text-small&quot;&gt;${level.short}&lt;/span&gt;
+          &lt;/div&gt;`;
+        }).join(&#x27;&#x27;);
+        map.querySelectorAll(&#x27;[data-level]&#x27;).forEach(button =&gt; {
+          button.addEventListener(&#x27;click&#x27;, () =&gt; {
+            const next = Number(button.dataset.level);
+            if (next &lt; state.unlocked) {
+              state.currentLevel = next;
+              state.currentQuestion = Math.min(state.currentQuestion, levels[next].questions.length - 1);
+              answered = false;
+              markSeen(next);
+              saveState();
+              renderAll();
+            }
+          });
+        });
+      }
+
+      function markSeen(levelIndex) {
+        if (!state.seen.includes(levelIndex)) state.seen.push(levelIndex);
+      }
+
+      function renderPlay() {
+        const play = root.querySelector(&#x27;#cat-play&#x27;);
+        if (state.completed.length === levels.length &amp;&amp; state.currentLevel &gt;= levels.length) {
+          play.innerHTML = `&lt;div class=&quot;ending&quot;&gt;
+            &lt;div class=&quot;ending-mark&quot; aria-hidden=&quot;true&quot;&gt;🧭&lt;/div&gt;
+            &lt;h2&gt;Archipel cartographié !&lt;/h2&gt;
+            &lt;p class=&quot;ending-copy&quot;&gt;Tu as relié objets, morphismes, foncteurs et adjonctions. Ton carnet reste sauvegardé : tu peux revisiter chaque île pour consolider les notions.&lt;/p&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-revisit&quot;&gt;Revisiter la carte&lt;/button&gt;
+          &lt;/div&gt;`;
+          play.querySelector(&#x27;#cat-revisit&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; { state.currentLevel = 0; state.currentQuestion = 0; saveState(); renderAll(); });
+          return;
+        }
+
+        const levelIndex = Math.min(state.currentLevel, levels.length - 1);
+        const level = levels[levelIndex];
+        const questionIndex = Math.min(state.currentQuestion, level.questions.length - 1);
+        const item = level.questions[questionIndex];
+        const dots = level.questions.map((_, i) =&gt; `&lt;span class=&quot;mission-dot ${i &lt; questionIndex || state.correct[keyFor(levelIndex, i)] ? &#x27;is-done&#x27; : &#x27;&#x27;} ${i === questionIndex ? &#x27;is-current&#x27; : &#x27;&#x27;}&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;`).join(&#x27;&#x27;);
+        const savedCorrect = Boolean(state.correct[keyFor(levelIndex, questionIndex)]);
+        answered = savedCorrect;
+
+        play.innerHTML = `
+          &lt;div class=&quot;mission-head&quot;&gt;
+            &lt;div class=&quot;mission-title&quot;&gt;
+              &lt;span class=&quot;mission-kicker text-small&quot;&gt;Île ${levelIndex + 1} sur ${levels.length} · Mission ${questionIndex + 1} sur ${level.questions.length}&lt;/span&gt;
+              &lt;h2&gt;${level.icon} ${level.name}&lt;/h2&gt;
+            &lt;/div&gt;
+            &lt;div class=&quot;mission-dots&quot; aria-label=&quot;Progression dans l’île&quot;&gt;${dots}&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;concept-strip&quot;&gt;
+            &lt;span class=&quot;concept-icon&quot; aria-hidden=&quot;true&quot;&gt;💡&lt;/span&gt;
+            &lt;div class=&quot;concept-copy&quot;&gt;&lt;strong&gt;${level.concept}&lt;/strong&gt;&lt;span&gt;${level.intro}&lt;/span&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;diagram&quot;&gt;${diagrams[level.diagram]}&lt;/div&gt;
+          &lt;div class=&quot;question-zone&quot;&gt;
+            &lt;div class=&quot;question&quot;&gt;${item.q}&lt;/div&gt;
+            &lt;div class=&quot;answers&quot;&gt;${item.a.map((answer, i) =&gt; `&lt;button type=&quot;button&quot; class=&quot;btn btn-block&quot; data-answer=&quot;${i}&quot; ${savedCorrect ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;${answer}&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
+            &lt;div class=&quot;feedback ${savedCorrect ? &#x27;is-success&#x27; : &#x27;&#x27;}&quot; id=&quot;cat-feedback&quot;&gt;${savedCorrect ? `✓ ${item.why}` : &#x27;Choisis une réponse pour tester ton intuition.&#x27;}&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;action-row&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-ghost&quot; id=&quot;cat-prev&quot; ${questionIndex === 0 ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;← Mission précédente&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; id=&quot;cat-next&quot; ${savedCorrect ? &#x27;&#x27; : &#x27;disabled&#x27;}&gt;${questionIndex === level.questions.length - 1 ? &#x27;Terminer l’île&#x27; : &#x27;Mission suivante&#x27;} →&lt;/button&gt;
+          &lt;/div&gt;`;
+
+        markSeen(levelIndex);
+        saveState();
+        play.querySelectorAll(&#x27;[data-answer]&#x27;).forEach(button =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; chooseAnswer(Number(button.dataset.answer))));
+        play.querySelector(&#x27;#cat-prev&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+          if (state.currentQuestion &gt; 0) { state.currentQuestion -= 1; answered = false; saveState(); renderPlay(); }
+        });
+        play.querySelector(&#x27;#cat-next&#x27;).addEventListener(&#x27;click&#x27;, nextMission);
+      }
+
+      function chooseAnswer(choice) {
+        if (answered) return;
+        const level = levels[state.currentLevel];
+        const item = level.questions[state.currentQuestion];
+        const key = keyFor(state.currentLevel, state.currentQuestion);
+        state.attempts[key] = (state.attempts[key] || 0) + 1;
+        const feedback = root.querySelector(&#x27;#cat-feedback&#x27;);
+        const live = root.querySelector(&#x27;#cat-live&#x27;);
+        if (choice === item.ok) {
+          state.correct[key] = true;
+          answered = true;
+          feedback.className = &#x27;feedback is-success&#x27;;
+          feedback.textContent = `✓ ${item.why}`;
+          live.textContent = &#x27;Bonne réponse. Un éclat de savoir gagné.&#x27;;
+          root.querySelectorAll(&#x27;[data-answer]&#x27;).forEach((button, i) =&gt; {
+            button.disabled = true;
+            if (i === choice) button.classList.add(&#x27;is-selected&#x27;);
+          });
+          root.querySelector(&#x27;#cat-next&#x27;).disabled = false;
+          saveState();
+          renderStats();
+        } else {
+          feedback.className = &#x27;feedback is-error&#x27;;
+          feedback.textContent = &#x27;Pas tout à fait. Observe les sources, les cibles et l’ordre de lecture, puis réessaie.&#x27;;
+          live.textContent = &#x27;Réponse incorrecte. Tu peux réessayer.&#x27;;
+          saveState();
+        }
+      }
+
+      function nextMission() {
+        const level = levels[state.currentLevel];
+        if (!state.correct[keyFor(state.currentLevel, state.currentQuestion)]) return;
+        if (state.currentQuestion &lt; level.questions.length - 1) {
+          state.currentQuestion += 1;
+          answered = false;
+          saveState();
+          renderAll();
+          return;
+        }
+        if (!state.completed.includes(state.currentLevel)) state.completed.push(state.currentLevel);
+        const finished = state.currentLevel;
+        state.unlocked = Math.min(levels.length, Math.max(state.unlocked, finished + 2));
+        if (finished === levels.length - 1) {
+          state.currentLevel = levels.length;
+          state.currentQuestion = 0;
+        } else {
+          state.currentLevel = finished + 1;
+          state.currentQuestion = 0;
+        }
+        answered = false;
+        saveState();
+        renderAll();
+        root.querySelector(&#x27;#cat-live&#x27;).textContent = finished === levels.length - 1 ? &#x27;Expédition terminée.&#x27; : &#x27;Nouvelle île débloquée.&#x27;;
+      }
+
+      function renderNotebook() {
+        const area = root.querySelector(&#x27;#cat-discoveries&#x27;);
+        const discoveries = levels.filter((_, index) =&gt; state.seen.includes(index));
+        area.innerHTML = discoveries.length
+          ? discoveries.map((level, index) =&gt; `&lt;span class=&quot;viz-badge&quot;&gt;${level.icon} ${level.concept}${state.completed.includes(levels.indexOf(level)) ? &#x27; · maîtrisé&#x27; : &#x27; · en cours&#x27;}&lt;/span&gt;`).join(&#x27;&#x27;)
+          : &#x27;&lt;span class=&quot;text-muted&quot;&gt;Ton premier concept apparaîtra ici dès que tu accosteras.&lt;/span&gt;&#x27;;
+      }
+
+      root.querySelector(&#x27;#cat-reset&#x27;).addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (window.confirm(&#x27;Effacer toute la progression sauvegardée et recommencer ?&#x27;)) {
+          state = freshState();
+          answered = false;
+          try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+          try { window.name = &#x27;&#x27;; } catch (_) {}
+          renderAll();
+        }
+      });
+
+      renderAll();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
