@@ -15,7 +15,9 @@ Le jeu propose 8 îles et 24 missions :
 7. transformations naturelles ;
 8. adjonctions.
 
-Chaque notion est introduite par un court rappel, un diagramme et trois questions. Les îles se débloquent progressivement. Le carnet de bord, les réponses et le niveau atteint sont sauvegardés localement dans le navigateur.
+Chaque notion est introduite par un court rappel, un diagramme et trois questions. Les îles se débloquent progressivement.
+
+Le menu principal propose 10 emplacements de sauvegarde indépendants. Chaque partie est autosauvegardée dans le navigateur et peut être reprise, écrasée après avertissement ou supprimée avec confirmation.
 
 ## Jouer
 
