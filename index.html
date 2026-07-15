@@ -882,14 +882,13 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .concept-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; background: color-mix(in srgb, var(--viz-series-3) 12%, var(--muted)); font-family: ui-serif, Georgia, serif; font-size: 20px; }
     #archipel-categories .concept-copy { display: grid; gap: 4px; max-width: 820px; }
     #archipel-categories .diagram { min-height: 210px; display: grid; place-items: center; padding: 14px 8px; color: var(--foreground); background: radial-gradient(circle at center, color-mix(in srgb, var(--viz-series-1) 8%, transparent), transparent 66%); }
-    #archipel-categories .diagram &gt; svg { width: 100%; max-width: 620px; height: 190px; overflow: visible; }
+    #archipel-categories .diagram-canvas { position: relative; width: 100%; max-width: 620px; aspect-ratio: 560 / 180; }
+    #archipel-categories .diagram-canvas &gt; svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
     #archipel-categories .diagram .node { fill: color-mix(in srgb, var(--viz-series-1) 16%, var(--card)); stroke: color-mix(in srgb, var(--viz-series-1) 32%, var(--border)); stroke-width: 1.5; }
     #archipel-categories .diagram .node-alt { fill: color-mix(in srgb, var(--viz-series-2) 16%, var(--card)); stroke: color-mix(in srgb, var(--viz-series-2) 32%, var(--border)); stroke-width: 1.5; }
     #archipel-categories .diagram .edge { stroke: var(--foreground); stroke-width: 2; fill: none; }
     #archipel-categories .diagram .soft-edge { stroke: var(--muted-foreground); stroke-width: 1.5; fill: none; stroke-dasharray: 5 5; }
-    #archipel-categories .diagram text { fill: var(--foreground); font-family: ui-serif, Georgia, serif; font-size: 14px; }
-    #archipel-categories .diagram foreignObject { overflow: visible; }
-    #archipel-categories .diagram .svg-math-label { display: flex; width: 120px; height: 32px; align-items: center; justify-content: center; color: var(--foreground); }
+    #archipel-categories .diagram-label { position: absolute; left: var(--label-x); top: var(--label-y); transform: translate(-50%, -50%); display: grid; min-width: 40px; min-height: 28px; place-items: center; color: var(--foreground); font-size: 14px; line-height: 1; pointer-events: none; }
     #archipel-categories .question-zone { display: grid; gap: 14px; }
     #archipel-categories .course-shell { display: grid; gap: 22px; }
     #archipel-categories .course-progress { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
@@ -964,7 +963,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       #archipel-categories .concept-strip { grid-template-columns: 32px minmax(0, 1fr); gap: 8px; }
       #archipel-categories .concept-icon { width: 30px; height: 30px; }
       #archipel-categories .diagram { min-height: 126px; padding-inline: 0; }
-      #archipel-categories .diagram &gt; svg { height: 126px; }
+      #archipel-categories .diagram-canvas { max-width: 560px; }
       #archipel-categories .question { font-size: 17px; line-height: 1.4; }
       #archipel-categories .answers { gap: 7px; }
       #archipel-categories .action-row { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
@@ -1292,11 +1291,15 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
 
       function diagramMarkup(key) {
-        return diagrams[key].replace(/&lt;text x=&quot;([\d.]+)&quot; y=&quot;([\d.]+)&quot; text-anchor=&quot;middle&quot;&gt;([^&lt;]+)&lt;\/text&gt;/g, (_, x, y, label) =&gt; {
-          const left = Number(x) - 60;
-          const top = Number(y) - 16;
-          return `&lt;foreignObject x=&quot;${left}&quot; y=&quot;${top}&quot; width=&quot;120&quot; height=&quot;32&quot;&gt;&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot; class=&quot;svg-math-label&quot;&gt;${mathText(label)}&lt;/div&gt;&lt;/foreignObject&gt;`;
+        const labels = [];
+        const drawing = diagrams[key].replace(/&lt;text x=&quot;([\d.]+)&quot; y=&quot;([\d.]+)&quot; text-anchor=&quot;middle&quot;&gt;([^&lt;]+)&lt;\/text&gt;/g, (_, x, y, label) =&gt; {
+          labels.push({ x: Number(x), y: Number(y), label });
+          return &#x27;&#x27;;
         });
+        const labelMarkup = labels.map(({ x, y, label }) =&gt;
+          `&lt;span class=&quot;diagram-label&quot; aria-hidden=&quot;true&quot; style=&quot;--label-x:${(x / 5.6).toFixed(4)}%;--label-y:${((y - 5) / 1.8).toFixed(4)}%&quot;&gt;${mathText(label)}&lt;/span&gt;`
+        ).join(&#x27;&#x27;);
+        return `&lt;div class=&quot;diagram-canvas&quot;&gt;${drawing}${labelMarkup}&lt;/div&gt;`;
       }
 
       function questionPool(levelIndex, seed) {
