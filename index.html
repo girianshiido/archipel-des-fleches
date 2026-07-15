@@ -913,9 +913,12 @@ html&gt;body{padding:0}&lt;/style&gt;
     #archipel-categories .answers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
     #archipel-categories .answers .btn { min-height: 48px; white-space: normal; text-align: left; justify-content: flex-start; }
     #archipel-categories .choice-key { width: 24px; height: 24px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 999px; background: color-mix(in srgb, var(--primary) 9%, var(--muted)); color: var(--muted-foreground); font-size: 11px; }
-    #archipel-categories .feedback { min-height: 44px; display: flex; align-items: center; gap: 8px; color: var(--muted-foreground); padding-inline-start: 2px; }
-    #archipel-categories .feedback.is-success { color: var(--foreground); }
-    #archipel-categories .feedback.is-error { color: var(--destructive); }
+    #archipel-categories .feedback { min-height: 44px; display: block; color: var(--muted-foreground); padding: 8px 2px; line-height: 1.55; }
+    #archipel-categories .feedback.is-success,
+    #archipel-categories .feedback.is-error { display: grid; grid-template-columns: 1.25rem minmax(0, 1fr); align-items: start; column-gap: 8px; color: var(--foreground); }
+    #archipel-categories .feedback-icon { display: block; line-height: 1.55; text-align: center; font-weight: 500; }
+    #archipel-categories .feedback.is-error .feedback-icon { color: var(--destructive); }
+    #archipel-categories .feedback-copy { min-width: 0; }
     #archipel-categories .action-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 4px; border-top: 1px solid color-mix(in srgb, var(--border) 72%, transparent); }
     #archipel-categories .reset-panel { display: grid; gap: 14px; }
     #archipel-categories .reset-panel[hidden] { display: none; }
@@ -1286,8 +1289,13 @@ html&gt;body{padding:0}&lt;/style&gt;
         text = text.replace(/\b([FGU])\(([A-DXYZ])\)/g, wrap);
         text = text.replace(/(?&lt;![\p{L}\p{N}_])(id(?:[ₐᵦₓ])?|Hom|𝒞|𝒟|ℤ|ℕ|[ηθ](?:[ₐᵦ])?|[αβγδε])(?![\p{L}\p{N}_])/gu, match =&gt; wrap(match));
         text = text.replace(/\b(Ens|Ab|Top)\b/g, match =&gt; wrap(match));
-        text = text.replace(/(?&lt;![\p{L}\p{N}_])([A-Z]|e|f|g|h|k|n|p|q|r|s|u|v|w|x)(?![\p{L}\p{N}_])/gu, match =&gt; wrap(match));
+        text = text.replace(/(?&lt;![\p{L}\p{N}_&#x27;’])([A-Z]|e|f|g|h|k|n|p|q|r|s|u|v|w|x)(?![\p{L}\p{N}_&#x27;’])/gu, match =&gt; wrap(match));
         return text.replace(/,¤(\d+),/g, (_, index) =&gt; stored[Number(index)]);
+      }
+
+      function feedbackMarkup(message, tone = &#x27;hint&#x27;) {
+        const icon = tone === &#x27;success&#x27; ? &#x27;✓&#x27; : tone === &#x27;error&#x27; ? &#x27;!&#x27; : &#x27;&#x27;;
+        return `${icon ? `&lt;span class=&quot;feedback-icon&quot; aria-hidden=&quot;true&quot;&gt;${icon}&lt;/span&gt;` : &#x27;&#x27;}&lt;span class=&quot;feedback-copy&quot;&gt;${mathText(message)}&lt;/span&gt;`;
       }
 
       function diagramMarkup(key) {
@@ -1930,7 +1938,7 @@ html&gt;body{padding:0}&lt;/style&gt;
             &lt;div class=&quot;difficulty&quot;&gt;&lt;span class=&quot;question-label&quot;&gt;Question d’exploration&lt;/span&gt;&lt;span class=&quot;difficulty-marks&quot; aria-label=&quot;Difficulté ${item.difficulty} sur 5&quot;&gt;${difficulty}&lt;/span&gt;&lt;/div&gt;
             &lt;div class=&quot;question&quot;&gt;${mathText(item.q)}&lt;/div&gt;
             &lt;div class=&quot;answers&quot;&gt;${item.answers.map((answer, i) =&gt; `&lt;button type=&quot;button&quot; class=&quot;btn btn-block&quot; data-answer=&quot;${i}&quot; ${savedCorrect ? &#x27;disabled&#x27; : &#x27;&#x27;}&gt;&lt;span class=&quot;choice-key&quot; aria-hidden=&quot;true&quot;&gt;${String.fromCharCode(65 + i)}&lt;/span&gt;&lt;span&gt;${mathText(answer)}&lt;/span&gt;&lt;/button&gt;`).join(&#x27;&#x27;)}&lt;/div&gt;
-            &lt;div class=&quot;feedback ${savedCorrect ? &#x27;is-success&#x27; : &#x27;&#x27;}&quot; id=&quot;cat-feedback&quot;&gt;${savedCorrect ? `✓ ${mathText(item.why)}` : &#x27;Choisis une réponse pour tester ton intuition.&#x27;}&lt;/div&gt;
+            &lt;div class=&quot;feedback ${savedCorrect ? &#x27;is-success&#x27; : &#x27;&#x27;}&quot; id=&quot;cat-feedback&quot;&gt;${savedCorrect ? feedbackMarkup(item.why, &#x27;success&#x27;) : feedbackMarkup(&#x27;Choisis une réponse pour tester ton intuition.&#x27;)}&lt;/div&gt;
             ${savedCorrect ? `&lt;div class=&quot;score-note&quot;&gt;&lt;span&gt;Cette réponse : &lt;strong&gt;${(stat.score || 0).toLocaleString(&#x27;fr-FR&#x27;)} points&lt;/strong&gt;&lt;/span&gt;&lt;span&gt;${stat.firstTry ? &#x27;Juste du premier coup&#x27; : `${stat.attempts || 1} tentatives`}&lt;/span&gt;&lt;span&gt;${Math.round((stat.thinkingMs || 0) / 1000)} s de réflexion&lt;/span&gt;&lt;/div&gt;` : &#x27;&#x27;}
           &lt;/div&gt;
           &lt;div class=&quot;action-row&quot;&gt;
@@ -2042,7 +2050,7 @@ html&gt;body{padding:0}&lt;/style&gt;
           const speedBonus = Math.max(0, 600 - Math.floor((stat.thinkingMs || 0) / 1000) * 10);
           stat.score = (stat.firstTry ? 1000 : 550) + speedBonus;
           feedback.className = &#x27;feedback is-success&#x27;;
-          feedback.textContent = `✓ ${item.why}`;
+          feedback.innerHTML = feedbackMarkup(item.why, &#x27;success&#x27;);
           live.textContent = &#x27;Bonne réponse. Un éclat de savoir gagné.&#x27;;
           root.querySelectorAll(&#x27;[data-answer]&#x27;).forEach((button, i) =&gt; {
             button.disabled = true;
@@ -2054,7 +2062,7 @@ html&gt;body{padding:0}&lt;/style&gt;
         } else {
           state.mistakes += 1;
           feedback.className = &#x27;feedback is-error&#x27;;
-          feedback.textContent = &#x27;Pas tout à fait. Relis les types et le sens des flèches, puis réessaie.&#x27;;
+          feedback.innerHTML = feedbackMarkup(&#x27;Pas tout à fait. Relis les types et le sens des flèches, puis réessaie.&#x27;, &#x27;error&#x27;);
           live.textContent = &#x27;Réponse incorrecte. Tu peux réessayer.&#x27;;
           state.timerStart = Date.now();
           saveState();
